@@ -61,10 +61,11 @@ def show_menu():
     button1_3 = tk.Button(root, text="CRUD Pengembalian Buku")
     button1_3.pack()
 
+def show_crud_peminjaman():
+    print("CRUD Peminjaman Buku :")
+
 # tombol untuk masuk ke menu
 button = tk.Button(root, text="Masuk", command=show_menu)
 button.pack()
 
 root.mainloop()
-
-ftfyhghgh
