@@ -66,3 +66,5 @@ button = tk.Button(root, text="Masuk", command=show_menu)
 button.pack()
 
 root.mainloop()
+
+ftfyhghgh
