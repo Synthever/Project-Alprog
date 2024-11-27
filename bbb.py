@@ -22,13 +22,12 @@ label.pack(pady=120)
 space = tk.Label(root, text="")
 space.pack()
 
-def show_crud_buku():
-    page_crud_buku = tk.Frame(root, bg="white")
-    page_crud_buku.place(relwidth=1, relheight=1)
+def show_crud_buku(): 
 
     label = tk.Label(text="CRUD Buku: ", font=("Arial", 20, "bold"), justify="center", padx=0, pady=-40)
     label.pack(pady=10)
 
+   
     button.pack_forget()
 
     space = tk.Label(root, text="")

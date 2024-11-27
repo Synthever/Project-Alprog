@@ -1,73 +1,113 @@
 import tkinter as tk
 from tkinter import messagebox
+import customtkinter
 
-# import data buku dari data.json
-import json
-with open("data.json", "r") as file:
-    data = json.load(file)
-    list_buku = data['list_buku']
-    list_peminjaman = data['list_peminjaman']
-    list_pengembalian = data['list_pengembalian']
 
-# Fungsi untuk berpindah dari laman menu ke laman CRUD Buku dengan background biru muda
-def show_crud_buku():
-    page_crud_buku = tk.Frame(root, bg="white")
-    page_crud_buku.place(relwidth=1, relheight=1)
+# Custom Tkinter System Setting
+customtkinter.set_appearance_mode("system")
+customtkinter.set_default_color_theme("blue")
 
-    label.config(text="CRUD Buku :", font=("montserrat", 20, "bold"))
-    label.pack()
+# Window or frame
+app = customtkinter.CTk()
+app.geometry("1080x720")
+app.title("Sistem Pendataan Perpustakaan")
 
-    button.pack_forget()
+# Spacing no text
+spacing = customtkinter.CTkLabel(app, text=" ")
+spacing.pack()
 
-    space = tk.Label(root, text="")
-    space.pack()
-
-    button2_1 = tk.Button(root, text="Lihat Buku", width=20)
-    button2_1.pack(pady=5)
-
-    button2_2 = tk.Button(root, text="Tambah Buku", width=20)
-    button2_2.pack(pady=5)
-
-    button2_3 = tk.Button(root, text="Edit Buku", width=20)
-    button2_3.pack(pady=5)
-
-    button2_4 = tk.Button(root, text="Hapus Buku", width=20)
-    button2_4.pack(pady=5)
-
-# Fungsi untuk berpindah dari laman selamat datang ke laman menu dengan background putih
-def show_menu():
-    page_menu= tk.Frame(root, bg="white")
-    page_menu.place(relwidth=1, relheight=1)
+def show_main_menu():
+    for widget in app.winfo_children():
+        widget.pack_forget()
     
-    label.config(text="Pilih Menu :", font=("montserrat", 20, "bold"))
-    label.pack()
+    welcome_label = customtkinter.CTkLabel(app, text="Selamat Datang di Sistem Pendataan Perpustakaan",  font=("montserrat", 28, "bold"), justify="center")
+    welcome_label.pack(pady=120)
 
-    button.pack_forget()
+    btn_crud_buku = customtkinter.CTkButton(app, text="CRUD Buku", command=show_crud_buku)
+    btn_crud_buku.pack(pady=10)
 
-    space = tk.Label(root, text="")
-    space.pack()
+    btn_crud_peminjaman = customtkinter.CTkButton(app, text="CRUD Peminjaman", command=show_crud_peminjaman)
+    btn_crud_peminjaman.pack(pady=10)
 
-    button1_1 = tk.Button(root, text="CRUD Buku", command=show_crud_buku, width=20)
-    button1_1.pack(pady=5)
+    btn_crud_pengembalian = customtkinter.CTkButton(app, text="CRUD Pengembalian", command=show_crud_pengembalian)
+    btn_crud_pengembalian.pack(pady=10)
 
-    button1_2 = tk.Button(root, text="CRUD Peminjaman Buku", width=20)
-    button1_2.pack(pady=5)
+def show_crud_buku():
+    for widget in app.winfo_children():
+        widget.pack_forget()
+        
+    welcome_label = customtkinter.CTkLabel(app, text=" ")
+    welcome_label.pack(pady=120)
+    
+    btn_create_buku = customtkinter.CTkButton(app, text="Create / Tambahkan Data Buku", width=24)
+    btn_create_buku.pack(pady=10)
 
-# tampilkan Ucapan selamat datang dan List Menu yang tersedia dan Tombol untuk memilih menu yang diinginkan menggunakan gui tkinter
-root = tk.Tk()
-root.title("Perpustakaan")
-root.geometry("1080x720")
+    btn_read_buku = customtkinter.CTkButton(app, text="Read / Tampilkan list Data Buku", width=24)
+    btn_read_buku.pack(pady=10)
 
-# Label
-label = tk.Label(root, text="Selamat Datang di Perpustakaan", font=("montserrat", 24, "bold"), justify="center")
-label.pack(pady=120)
+    btn_update_buku = customtkinter.CTkButton(app, text="Update / Update Data Buku", width=24)
+    btn_update_buku.pack(pady=10)
 
-space = tk.Label(root, text="")
-space.pack()
+    btn_delete_buku = customtkinter.CTkButton(app, text="Delete / Menghapus Data Buku", width=24)
+    btn_delete_buku.pack(pady=10)
 
-button = tk.Button(root, text="Masuk", command=show_menu, width=20)
-button.pack(pady=5)
+    btn_back = customtkinter.CTkButton(app, text="Back", command=show_main_menu, width=24)
+    btn_back.pack(pady=20)
 
-root.mainloop()
+def show_crud_peminjaman():
+    for widget in app.winfo_children():
+        widget.pack_forget()
+        
+    welcome_label = customtkinter.CTkLabel(app, text=" ")
+    welcome_label.pack(pady=120)
+    
+    btn_create_peminjaman = customtkinter.CTkButton(app, text="Create / Tambahkan Data Peminjaman", width=24)
+    btn_create_peminjaman.pack(pady=10)
 
+    btn_read_peminjaman = customtkinter.CTkButton(app, text="Read / Tampilkan list Data Peminjaman", width=24)
+    btn_read_peminjaman.pack(pady=10)
 
+    btn_update_peminjaman = customtkinter.CTkButton(app, text="Update / Update Data Peminjaman", width=24)
+    btn_update_peminjaman.pack(pady=10)
+
+    btn_delete_peminjaman = customtkinter.CTkButton(app, text="Delete / Menghapus Data Peminjaman", width=24)
+    btn_delete_peminjaman.pack(pady=10)
+
+    btn_back = customtkinter.CTkButton(app, text="Back", command=show_main_menu, width=24)
+    btn_back.pack(pady=20)
+
+def show_crud_pengembalian():
+    for widget in app.winfo_children():
+        widget.pack_forget()
+
+    welcome_label = customtkinter.CTkLabel(app, text=" ")
+    welcome_label.pack(pady=120)
+    
+    btn_create_pengembalian = customtkinter.CTkButton(app, text="Create / Tambahkan Data Pengembalian", width=24)
+    btn_create_pengembalian.pack(pady=10)
+
+    btn_read_pengembalian = customtkinter.CTkButton(app, text="Read / Tampilkan list Data Pengembalian", width=24)
+    btn_read_pengembalian.pack(pady=10)
+
+    btn_update_pengembalian = customtkinter.CTkButton(app, text="Update / Update Data Pengembalian", width=24)
+    btn_update_pengembalian.pack(pady=10)
+
+    btn_delete_pengembalian = customtkinter.CTkButton(app, text="Delete / Menghapus Data Pengembalian", width=24)
+    btn_delete_pengembalian.pack(pady=10)
+
+    btn_back = customtkinter.CTkButton(app, text="Back", command=show_main_menu, width=24)
+    btn_back.pack(pady=20)
+
+show_main_menu()
+
+# buatlah fungsi untuk menuju ke laman tampilkan list data buku
+def show_list_data_buku():
+    for widget in app.winfo_children():
+        widget.pack_forget()
+    
+    welcome_label = customtkinter.CTkLabel(app, text="List Data Buku",  font=("montserrat", 28, "bold"), justify="center")
+    welcome_label.pack(pady=120)
+
+    
+# run the app
+app.mainloop()
