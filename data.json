@@ -4,79 +4,48 @@
             "id_buku": 1,
             "judul": "Doraemon",
             "pengarang": "Fujiko F. Fujio",
-            "tahun": 1969,
+            "tahun_terbit": 1969,
             "penerbit": "Shogakukan",
-            "stock_buku": 10,
-            "rak_buku": "1.3.4"
+            "stock": 10,
+            "rak": "1.3.4"
         },
         {
             "id_buku": 2,
             "judul": "Naruto",
             "pengarang": "Masashi Kishimoto",
-            "tahun": 1997,
+            "tahun_terbit": 1997,
             "penerbit": "Shueisha",
-            "stock_buku": 5,
-            "rak_buku": "2.3.4"
+            "stock": 5,
+            "rak": "2.3.4"
         },
         {
             "id_buku": 3,
             "judul": "One Piece",
             "pengarang": "Eiichiro Oda",
-            "tahun": 1997,
+            "tahun_terbit": 1997,
             "penerbit": "Shueisha",
-            "stock_buku": 7,
-            "rak_buku": "3.3.4"
+            "stock": 7,
+            "rak": "3.3.4"
         },
         {
             "id_buku": 4,
             "judul": "Detective Conan",
             "pengarang": "Gosho Aoyama",
-            "tahun": 1994,
+            "tahun_terbit": 1994,
             "penerbit": "Shogakukan",
-            "stock_buku": 3,
-            "rak_buku": "4.3.4"
+            "stock": 3,
+            "rak": "4.3.4"
         },
         {
             "id_buku": 5,
             "judul": "Dragon Ball",
             "pengarang": "Akira Toriyama",
-            "tahun": 1984,
+            "tahun_terbit": 1984,
             "penerbit": "Shueisha",
-            "stock_buku": 2,
-            "rak_buku": "5.3.4"
+            "stock": 2,
+            "rak": "5.3.4"
         }
     ],
-
-    "list_anggota": [
-        {
-            "id_anggota": 1,
-            "nama": "Budi",
-            "alamat": "Jakarta",
-            "no_telp": "08123456789",
-            "jenis_kelamin": "Laki-laki",
-            "pekerjaan": "Karyawan Swasta",
-            "status": "Aktif"
-        },
-        {
-            "id_anggota": 2,
-            "nama": "Ani",
-            "alamat": "Bandung",
-            "no_telp": "08123456788",
-            "jenis_kelamin": "Perempuan",
-            "pekerjaan": "Ibu Rumah Tangga",
-            "status": "Aktif"
-        },
-        {
-            "id_anggota": 3,
-            "nama": "Cici",
-            "alamat": "Surabaya",
-            "no_telp": "08123456787",
-            "jenis_kelamin": "Perempuan",
-            "pekerjaan": "Pelajar",
-            "status": "Aktif"
-        }
-    ],
-
     "list_peminjaman": [
         {
             "id_peminjaman": 1,
@@ -103,7 +72,6 @@
             "status": "Masih Dipinjam"
         }
     ],
-
     "list_pengembalian": [
         {
             "id_pengembalian": 1,
@@ -123,7 +91,7 @@
             "id_pengembalian": 3,
             "id_peminjaman": 3,
             "tanggal_kembali": "2024-12-03",
-            "denda": 1.000,
+            "denda": 1.0,
             "status": "Sudah Dikembalikan"
         }
     ]
