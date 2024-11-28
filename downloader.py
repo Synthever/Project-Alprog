@@ -70,5 +70,3 @@ button.pack()
 
 root.mainloop()
 
-# 
-

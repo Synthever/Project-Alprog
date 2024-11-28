@@ -154,6 +154,10 @@ def create_buku():
     btn_back = customtkinter.CTkButton(app, text="Back", command=show_crud_buku)
     btn_back.pack(pady=15)
 
+list_buku = []
+list_peminjaman = []
+list_pengembalian = []
+
 def submit_buku(judul, pengarang, penerbit, tahun_terbit, stok, rak):
     list_buku.append({
         "id_buku": len(list_buku) + 1,
