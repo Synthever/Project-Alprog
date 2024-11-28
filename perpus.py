@@ -204,8 +204,11 @@ def submit_buku(judul, pengarang, penerbit, tahun_terbit, stok, rak):
     
 def del_buku(id_buku):
     id_buku = int(id_buku)
-    if id_buku > len(list_buku):
-        messagebox.showerror("Error", "ID Buku tidak ditemukan")
+    with open("data.json", "r") as file:
+        data = json.load(file)
+        list_buku = data['list_buku']
+    if id_buku > len(list_buku) or id_buku < 1:
+        messagebox.showerror("Error", "ID Buku Tidak Ditemukan")
     else:
         list_buku.pop(id_buku - 1)
         with open("data.json", "w") as file:
@@ -214,7 +217,6 @@ def del_buku(id_buku):
                 "list_peminjaman": list_peminjaman,
                 "list_pengembalian": list_pengembalian
             }, file, indent=4)
-
         messagebox.showinfo("Success", "Data Buku Berhasil Dihapus")
 
     show_crud_buku()
