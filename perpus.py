@@ -30,37 +30,37 @@ def show_main_menu():
         widget.pack_forget()
     
     welcome_label = customtkinter.CTkLabel(app, text="Selamat Datang di Sistem Pendataan Perpustakaan",  font=("montserrat", 34, 'bold'))
-    welcome_label.pack(pady=120)
+    welcome_label.pack(pady=150)
 
     welcome_label = customtkinter.CTkLabel(app, text="Pilihan Menu :",  font=("montserrat", 22, 'bold'), justify="center")
     welcome_label.pack(pady=20)
 
-    btn_crud_buku = customtkinter.CTkButton(app, text="Management Buku", command=show_crud_buku, font=("montserrat", 16))
+    btn_crud_buku = customtkinter.CTkButton(app, text="Kelola Data Buku", command=show_crud_buku, font=("montserrat", 18), width=210, height=28)
     btn_crud_buku.pack(pady=10)
 
-    btn_crud_peminjaman = customtkinter.CTkButton(app, text="Management Peminjaman", command=show_crud_peminjaman, font=("montserrat", 16))
+    btn_crud_peminjaman = customtkinter.CTkButton(app, text="Kelola Peminjaman Buku", command=show_crud_peminjaman, font=("montserrat", 16), width=210, height=28)
     btn_crud_peminjaman.pack(pady=10)
 
-    btn_crud_pengembalian = customtkinter.CTkButton(app, text="Management Pengembalian", command=show_crud_pengembalian, font=("montserrat", 16))
+    btn_crud_pengembalian = customtkinter.CTkButton(app, text="Kelola Pengembalian Buku", command=show_crud_pengembalian, font=("montserrat", 16), width=210, height=28)
     btn_crud_pengembalian.pack(pady=10)
 
 def show_crud_buku():
     for widget in app.winfo_children():
         widget.pack_forget()
 
-    welcome_label = customtkinter.CTkLabel(app, text="Pilihan Menu CRUD Buku :",  font=("montserrat", 26, 'bold'))
-    welcome_label.pack(pady=120)
+    welcome_label = customtkinter.CTkLabel(app, text="Pilihan Menu Kelola Data Buku :",  font=("montserrat", 30, 'bold'))
+    welcome_label.pack(pady=150)
     
-    btn_create_buku = customtkinter.CTkButton(app, text="Tambahkan Data Buku", command=create_buku, font=("montserrat", 16))
-    btn_create_buku.pack(pady=10)
-
-    btn_read_buku = customtkinter.CTkButton(app, text="Tampilkan List Data Buku", command=read_buku, font=("montserrat", 16))
+    btn_read_buku = customtkinter.CTkButton(app, text="List Data Buku", command=read_buku, font=("montserrat", 16), width=210, height=28)
     btn_read_buku.pack(pady=10)
 
-    btn_update_buku = customtkinter.CTkButton(app, text="Update Data Buku", font=("montserrat", 16))
+    btn_create_buku = customtkinter.CTkButton(app, text="Tambahkan Buku Baru", command=create_buku, font=("montserrat", 16), width=210, height=28)
+    btn_create_buku.pack(pady=10)
+
+    btn_update_buku = customtkinter.CTkButton(app, text="Ubah Data Buku", font=("montserrat", 16), width=210, height=28)
     btn_update_buku.pack(pady=10)
 
-    btn_delete_buku = customtkinter.CTkButton(app, text="Menghapus Data Buku", command=delete_buku, font=("montserrat", 16))
+    btn_delete_buku = customtkinter.CTkButton(app, text="Hapus Data Buku", command=delete_buku, font=("montserrat", 16), width=210, height=28)
     btn_delete_buku.pack(pady=10)
 
     btn_back = customtkinter.CTkButton(app, text="Back", command=show_main_menu, width=10)
@@ -70,19 +70,19 @@ def show_crud_peminjaman():
     for widget in app.winfo_children():
         widget.pack_forget()
 
-    welcome_label = customtkinter.CTkLabel(app, text="Pilihan Menu CRUD Peminjaman :",  font=("montserrat", 26, 'bold'))
-    welcome_label.pack(pady=120)
-    
-    btn_create_peminjaman = customtkinter.CTkButton(app, text="Tambahkan Data Peminjaman", font=("montserrat", 16))
-    btn_create_peminjaman.pack(pady=10)
+    welcome_label = customtkinter.CTkLabel(app, text="Pilihan Menu Kelola Peminjaman Buku :",  font=("montserrat", 30, 'bold'))
+    welcome_label.pack(pady=150)
 
-    btn_read_peminjaman = customtkinter.CTkButton(app, text="Tampilkan List Data Peminjaman", font=("montserrat", 16))
+    btn_read_peminjaman = customtkinter.CTkButton(app, text="List Data Peminjaman", font=("montserrat", 16), width=250, height=28)
     btn_read_peminjaman.pack(pady=10)
 
-    btn_update_peminjaman = customtkinter.CTkButton(app, text="Update Data Peminjaman", font=("montserrat", 16))
+    btn_create_peminjaman = customtkinter.CTkButton(app, text="Tambah Peminjaman Baru", command=create_pinjam, font=("montserrat", 16), width=250, height=28)
+    btn_create_peminjaman.pack(pady=10)
+
+    btn_update_peminjaman = customtkinter.CTkButton(app, text="Ubah Data Peminjaman", font=("montserrat", 16), width=250, height=28)
     btn_update_peminjaman.pack(pady=10)
 
-    btn_delete_peminjaman = customtkinter.CTkButton(app, text="Menghapus Data Peminjaman", font=("montserrat", 16))
+    btn_delete_peminjaman = customtkinter.CTkButton(app, text="Hapus Data Peminjaman", font=("montserrat", 16), width=250, height=28)
     btn_delete_peminjaman.pack(pady=10)
 
     btn_back = customtkinter.CTkButton(app, text="Back", command=show_main_menu, width=10)
@@ -92,19 +92,19 @@ def show_crud_pengembalian():
     for widget in app.winfo_children():
         widget.pack_forget()
 
-    welcome_label = customtkinter.CTkLabel(app, text="Pilihan Menu CRUD Pengembalian :",  font=("montserrat", 26, 'bold'))
-    welcome_label.pack(pady=120)
+    welcome_label = customtkinter.CTkLabel(app, text="Pilihan Menu Kelola Pengembalian Buku :",  font=("montserrat", 30, 'bold'))
+    welcome_label.pack(pady=150)
     
-    btn_create_pengembalian = customtkinter.CTkButton(app, text="Tambahkan Data Pengembalian", font=("montserrat", 16))
-    btn_create_pengembalian.pack(pady=10)
-
-    btn_read_pengembalian = customtkinter.CTkButton(app, text="Tampilkan List Data Pengembalian", font=("montserrat", 16))
+    btn_read_pengembalian = customtkinter.CTkButton(app, text="List Data Pengembalian", font=("montserrat", 16), width=250, height=28)
     btn_read_pengembalian.pack(pady=10)
 
-    btn_update_pengembalian = customtkinter.CTkButton(app, text="Update Data Pengembalian", font=("montserrat", 16))
+    btn_create_pengembalian = customtkinter.CTkButton(app, text="Tambah Pengembalian Baru", font=("montserrat", 16), width=250, height=28)
+    btn_create_pengembalian.pack(pady=10)
+
+    btn_update_pengembalian = customtkinter.CTkButton(app, text="Ubah Data Pengembalian", font=("montserrat", 16), width=250, height=28)
     btn_update_pengembalian.pack(pady=10)
 
-    btn_delete_pengembalian = customtkinter.CTkButton(app, text="Menghapus Data Pengembalian", font=("montserrat", 16))
+    btn_delete_pengembalian = customtkinter.CTkButton(app, text="Hapus Data Pengembalian", font=("montserrat", 16), width=250, height=28)
     btn_delete_pengembalian.pack(pady=10)
 
     btn_back = customtkinter.CTkButton(app, text="Back", command=show_main_menu, width=10)
@@ -141,7 +141,7 @@ def create_buku():
     entry_tahun_terbit = customtkinter.CTkEntry(app)
     entry_tahun_terbit.pack(pady=2)
 
-    label_stok = customtkinter.CTkLabel(app, text="Stok :", font=("montserrat", 16))
+    label_stok = customtkinter.CTkLabel(app, text=" Jumlah Stok :", font=("montserrat", 16))
     label_stok.pack(pady=10)
 
     entry_stok = customtkinter.CTkEntry(app)
@@ -164,7 +164,7 @@ def delete_buku():
         widget.pack_forget()
 
     welcome_label = customtkinter.CTkLabel(app, text="Hapus Data Buku",  font=("montserrat", 32,'bold'))
-    welcome_label.pack(pady=120)
+    welcome_label.pack(pady=150)
 
     label_id = customtkinter.CTkLabel(app, text="ID Buku :", font=("montserrat", 16))
     label_id.pack(pady=10)
@@ -259,7 +259,99 @@ def read_buku():
     btn_back = customtkinter.CTkButton(app, text="Back", command=show_crud_buku, width=10)
     btn_back.pack(pady=15)
 
+def create_pinjam():
+    for widget in app.winfo_children():
+        widget.pack_forget()
+
+    welcome_label = customtkinter.CTkLabel(app, text="Tambahkan Data Peminjaman",  font=("montserrat", 32,'bold'))
+    welcome_label.pack(pady=40)
+
+    label_id_peminjaman = customtkinter.CTkLabel(app, text="ID Peminjaman :", font=("montserrat", 16))
+    label_id_peminjaman.pack(pady=10)
+
+    entry_id_peminjaman = customtkinter.CTkEntry(app)
+    entry_id_peminjaman.pack(pady=2)
+
+    label_id_anggota = customtkinter.CTkLabel(app, text="ID Anggota :", font=("montserrat", 16))
+    label_id_anggota.pack(pady=10)
+
+    entry_id_anggota = customtkinter.CTkEntry(app)
+    entry_id_anggota.pack(pady=2)
+
+    label_id_buku = customtkinter.CTkLabel(app, text="ID Buku :", font=("montserrat", 16))    
+    label_id_buku.pack(pady=10)
+
+    entry_id_buku = customtkinter.CTkEntry(app)
+    entry_id_buku.pack(pady=2)
+
+    label_tgl_pinjam = customtkinter.CTkLabel(app, text="Tanggal Pinjam :", font=("montserrat", 16))
+    label_tgl_pinjam.pack(pady=10)
+
+    entry_tgl_pinjam = customtkinter.CTkEntry(app)
+    entry_tgl_pinjam.pack(pady=2)
+
+    label_tgl_kembali = customtkinter.CTkLabel(app, text="Tanggal Kembali :", font=("montserrat", 16))
+    label_tgl_kembali.pack(pady=10)
+
+    entry_tgl_kembali = customtkinter.CTkEntry(app)
+    entry_tgl_kembali.pack(pady=2)
+
+    label_status = customtkinter.CTkLabel(app, text="Status :", font=("montserrat", 16))
+    label_status.pack(pady=10)
+
+    entry_status = customtkinter.CTkEntry(app)
+    entry_status.pack(pady=4)
+
+    btn_submit = customtkinter.CTkButton(app, text="Submit", command=lambda: submit_pinjam(entry_id_anggota.get(), entry_id_buku.get(), entry_tgl_pinjam.get(), entry_tgl_kembali.get(), entry_status.get()), width=10)
+    btn_submit.pack(pady=10)
+    
+    btn_back = customtkinter.CTkButton(app, text="Back", command=show_crud_peminjaman, width=10)
+    btn_back.pack(pady=10)
+
 show_main_menu()
+
+def submit_pinjam(id_peminjaman, id_anggota, id_buku, tgl_pinjam, tgl_kembali, status):
+    list_peminjaman.append({
+        "id_peminjaman": len(list_peminjaman) + 1,
+        "id_anggota": id_anggota,
+        "id_buku": id_buku,
+        "tgl_pinjam": tgl_pinjam,
+        "tgl_kembali": tgl_kembali,
+        "status": status
+    })
+
+    with open("data.json", "w") as file:
+        json.dump({
+            "list_buku": list_buku,
+            "list_peminjaman": list_peminjaman,
+            "list_pengembalian": list_pengembalian
+        }, file, indent=4)
+
+    messagebox.showinfo("Success", "Data Peminjaman Berhasil Ditambahkan")
+
+    show_crud_peminjaman()
+
+# make a scrollable frame to display the list of peminjaman in the library using tkinter gui
+def read_peminjaman():
+    for widget in app.winfo_children():
+        widget.pack_forget()
+
+    with open("data.json", "r") as file:
+        data = json.load(file)
+        list_peminjaman = data['list_peminjaman']
+
+    welcome_label = customtkinter.CTkLabel(app, text="List Data Peminjaman",  font=("montserrat", 24))
+    welcome_label.pack(pady=20)
+
+    frame = ScrollableLabelButtonFrame(app)
+    frame.pack(expand=True, fill="both")
+
+    for peminjaman in list_peminjaman:
+        frame.add_item(f"ID Peminjaman: {peminjaman['id_peminjaman']}, ID Anggota: {peminjaman['id_anggota']}, ID Buku: {peminjaman['id_buku']}, Tanggal Pinjam: {peminjaman['tgl_pinjam']}, Tanggal Kembali: {peminjaman['tgl_kembali']}, Status: {peminjaman['status']}")
+    
+    btn_back = customtkinter.CTkButton(app, text="Back", command=show_crud_peminjaman, width=10)
+    btn_back.pack(pady=15)
+    
 
 # run the app
 app.mainloop()

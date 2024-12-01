@@ -2,106 +2,14 @@
     "list_buku": [
         {
             "id_buku": 1,
-            "judul": "Doraemon",
-            "pengarang": "Fujiko F. Fujio",
-            "tahun_terbit": 1969,
-            "penerbit": "Shogakukan",
-            "stock": 10,
-            "rak": "1.3.4"
-        },
-        {
-            "id_buku": 2,
-            "judul": "Naruto",
-            "pengarang": "Masashi Kishimoto",
-            "tahun_terbit": 1997,
-            "penerbit": "Shueisha",
-            "stock": 5,
-            "rak": "2.3.4"
-        },
-        {
-            "id_buku": 3,
-            "judul": "One Piece",
-            "pengarang": "Eiichiro Oda",
-            "tahun_terbit": 1997,
-            "penerbit": "Shueisha",
-            "stock": 7,
-            "rak": "3.3.4"
-        },
-        {
-            "id_buku": 4,
-            "judul": "Detective Conan",
-            "pengarang": "Gosho Aoyama",
-            "tahun_terbit": 1994,
-            "penerbit": "Shogakukan",
-            "stock": 3,
-            "rak": "4.3.4"
-        },
-        {
-            "id_buku": 5,
-            "judul": "Dragon Ball",
-            "pengarang": "Akira Toriyama",
-            "tahun_terbit": 1984,
-            "penerbit": "Shueisha",
-            "stock": 2,
-            "rak": "5.3.4"
-        },
-        {
-            "id_buku": 6,
-            "judul": "awikwok",
-            "pengarang": "wahyu",
-            "penerbit": "gma",
-            "tahun_terbit": "2011",
-            "stock": "3",
-            "rak": "3.4.5"
+            "judul": "r5r66",
+            "pengarang": "rftft",
+            "penerbit": "35fft",
+            "tahun_terbit": "tfytgy",
+            "stock": "4ft4yfy",
+            "rak": "e3d3"
         }
     ],
-    "list_peminjaman": [
-        {
-            "id_peminjaman": 1,
-            "id_anggota": 1,
-            "id_buku": 1,
-            "tanggal_pinjam": "2024-11-26",
-            "tanggal_kembali": "2024-12-02",
-            "status": "Masih Dipinjam"
-        },
-        {
-            "id_peminjaman": 2,
-            "id_anggota": 1,
-            "id_buku": 4,
-            "tanggal_pinjam": "2024-11-26",
-            "tanggal_kembali": "2024-12-02",
-            "status": "Masih Dipinjam"
-        },
-        {
-            "id_peminjaman": 3,
-            "id_anggota": 2,
-            "id_buku": 3,
-            "tanggal_pinjam": "2024-11-26",
-            "tanggal_kembali": "2024-12-02",
-            "status": "Masih Dipinjam"
-        }
-    ],
-    "list_pengembalian": [
-        {
-            "id_pengembalian": 1,
-            "id_peminjaman": 1,
-            "tanggal_kembali": "2024-12-02",
-            "denda": 0,
-            "status": "Sudah Dikembalikan"
-        },
-        {
-            "id_pengembalian": 2,
-            "id_peminjaman": 2,
-            "tanggal_kembali": "2024-12-02",
-            "denda": 0,
-            "status": "Sudah Dikembalikan"
-        },
-        {
-            "id_pengembalian": 3,
-            "id_peminjaman": 3,
-            "tanggal_kembali": "2024-12-03",
-            "denda": 1.0,
-            "status": "Sudah Dikembalikan"
-        }
-    ]
+    "list_peminjaman": [],
+    "list_pengembalian": []
 }
