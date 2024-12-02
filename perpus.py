@@ -13,7 +13,7 @@ with open("data.json", "r") as file:
 
 
 # Custom Tkinter System Setting
-customtkinter.set_appearance_mode("system")
+customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("blue")
 
 # Window or frame

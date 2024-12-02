@@ -1,15 +1,5 @@
 {
-    "list_buku": [
-        {
-            "id_buku": 1,
-            "judul": "r5r66",
-            "pengarang": "rftft",
-            "penerbit": "35fft",
-            "tahun_terbit": "tfytgy",
-            "stock": "4ft4yfy",
-            "rak": "e3d3"
-        }
-    ],
+    "list_buku": [],
     "list_peminjaman": [],
     "list_pengembalian": []
 }
