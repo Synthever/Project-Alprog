@@ -178,11 +178,6 @@ def delete_buku():
     btn_back = customtkinter.CTkButton(app, text="Back", command=show_crud_buku, width=10)
     btn_back.pack(pady=10)
 
-
-list_buku = []
-list_peminjaman = []
-list_pengembalian = []
-
 def submit_buku(judul, pengarang, penerbit, tahun_terbit, stok, rak):
     list_buku.append({
         "id_buku": len(list_buku) + 1,
@@ -243,37 +238,98 @@ def read_buku():
     for widget in app.winfo_children():
         widget.pack_forget()
 
+    # Create main container frame
+    container = customtkinter.CTkFrame(app)
+    container.pack(fill="both", expand=True, padx=20, pady=20)
+
+    # Stylish header
+    header_frame = customtkinter.CTkFrame(container)
+    header_frame.pack(fill="x", pady=(0, 20))
+    
+    welcome_label = customtkinter.CTkLabel(
+        header_frame, 
+        text="List Data Buku",  
+        font=("montserrat", 32, "bold"),
+        text_color="#1f538d"
+    )
+    welcome_label.pack(pady=20)
+
+    # Create scrollable frame with custom styling
+    frame = ScrollableLabelButtonFrame(
+        container,
+        width=900,
+        height=400,
+        corner_radius=10,
+        fg_color=("#FFFFFF", "#333333"),
+        border_color="#1f538d",
+        border_width=2
+    )
+    frame.pack(expand=True, fill="both", padx=20, pady=10)
+
+    # Load and display book data with better formatting
     with open("data.json", "r") as file:
         data = json.load(file)
         list_buku = data['list_buku']
 
-    welcome_label = customtkinter.CTkLabel(app, text="List Data Buku",  font=("montserrat", 24))
-    welcome_label.pack(pady=20)
-
-    frame = ScrollableLabelButtonFrame(app)
-    frame.pack(expand=True, fill="both")
-
     for buku in list_buku:
-        frame.add_item(f"ID Buku: {buku['id_buku']}, Judul: {buku['judul']}, Pengarang: {buku['pengarang']}, Penerbit: {buku['penerbit']}, Tahun Terbit: {buku['tahun_terbit']}, Stok: {buku['stock']}, Rak: {buku['rak']}")
-    
-    btn_back = customtkinter.CTkButton(app, text="Back", command=show_crud_buku, width=10)
-    btn_back.pack(pady=15)
+        book_info = f"\tID: {buku['id_buku']} \t| Judul: {buku['judul']} | Pengarang: {buku['pengarang']} | Penerbit: {buku['penerbit']} | Tahun: {buku['tahun_terbit']} | Stok: {buku['stock']} | Rak: {buku['rak']}"
+        frame.add_item(book_info)
+
+    # Styled back button
+    btn_back = customtkinter.CTkButton(
+        container,
+        text="← Kembali",
+        command=show_crud_buku,
+        width=120,
+        height=32,
+        corner_radius=8,
+        font=("montserrat", 14, "bold"),
+        hover_color="#1f538d"
+    )
+    btn_back.pack(pady=20)
 
 def create_pinjam():
     for widget in app.winfo_children():
         widget.pack_forget()
 
-    welcome_label = customtkinter.CTkLabel(app, text="Tambahkan Data Peminjaman",  font=("montserrat", 32,'bold'))
-    welcome_label.pack(pady=40)
+    # Create main container with padding
+    container = customtkinter.CTkFrame(app)
+    container.pack(fill="both", expand=True, padx=30, pady=30)
 
-    label_id_peminjaman = customtkinter.CTkLabel(app, text="ID Peminjaman :", font=("montserrat", 16))
-    label_id_peminjaman.pack(pady=10)
+    welcome_label = customtkinter.CTkLabel(
+        container, 
+        text="📝 Tambah Data Peminjaman",  
+        font=("montserrat", 32, "bold"),
+        text_color="#1f538d"
+    )
+    welcome_label.pack(pady=20)
 
-    entry_id_peminjaman = customtkinter.CTkEntry(app)
-    entry_id_peminjaman.pack(pady=2)
+    # Create form fields with better spacing and styling
+    form_frame = customtkinter.CTkFrame(container)
+    form_frame.pack(pady=20)
 
-    label_id_anggota = customtkinter.CTkLabel(app, text="ID Anggota :", font=("montserrat", 16))
-    label_id_anggota.pack(pady=10)
+    label_id_peminjaman = customtkinter.CTkLabel(
+        form_frame, 
+        text="ID Peminjaman:", 
+        font=("montserrat", 16, "bold")
+    )
+    label_id_peminjaman.pack(pady=(10, 5))
+
+    entry_id_peminjaman = customtkinter.CTkEntry(
+        form_frame,
+        width=300,
+        height=35,
+        corner_radius=8,
+        placeholder_text="Masukkan ID Peminjaman"
+    )
+    entry_id_peminjaman.pack()
+
+    label_id_anggota = customtkinter.CTkLabel(
+        form_frame, 
+        text="ID Anggota:", 
+        font=("montserrat", 16, "bold")
+    )
+    label_id_anggota.pack(pady=(15, 5))
 
     entry_id_anggota = customtkinter.CTkEntry(app)
     entry_id_anggota.pack(pady=2)
