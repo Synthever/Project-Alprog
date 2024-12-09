@@ -105,7 +105,7 @@ def auth():
 
     # Left side - mp Image 
     image_frame = customtkinter.CTkFrame(content_frame)
-    image_frame.pack(side="left", padx=20) # Changed from right to left
+    image_frame.pack(side="left", padx=20) 
     image_frame.configure(fg_color="transparent")
 
     # Load and display mp image
