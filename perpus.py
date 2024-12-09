@@ -27,7 +27,6 @@ spacing = customtkinter.CTkLabel(app, text="")
 spacing.pack()
 
 def auth():
-    # Clear existing widgets
     for widget in app.winfo_children():
         widget.pack_forget()
 
@@ -40,7 +39,6 @@ def auth():
     content_frame.pack(expand=True)
     content_frame.configure(fg_color="transparent")
 
-    # Left side - Login form
     form_frame = customtkinter.CTkFrame(content_frame)
     form_frame.pack(side="left", padx=20)
     form_frame.configure(fg_color="transparent")
@@ -105,32 +103,23 @@ def auth():
     )
     login_button.pack(pady=20)
 
-    # Left side - QR Image 
+    # Left side - mp Image 
     image_frame = customtkinter.CTkFrame(content_frame)
     image_frame.pack(side="left", padx=20) # Changed from right to left
     image_frame.configure(fg_color="transparent")
 
-    # Load and display QR image
-    qr_image = customtkinter.CTkImage(
-        light_image=Image.open("qr.png"),
-        dark_image=Image.open("qr.png"),
+    # Load and display mp image
+    mp_image = customtkinter.CTkImage(
+        light_image=Image.open("mp.png"),
+        dark_image=Image.open("mp.png"),
         size=(200, 200)
     )
-    qr_label = customtkinter.CTkLabel(
+    mp_label = customtkinter.CTkLabel(
         image_frame,
         text="",
-        image=qr_image
+        image=mp_image
     )
-    qr_label.pack(pady=20)
-
-    # Display login message below QR
-    info_label = customtkinter.CTkLabel(
-        image_frame,
-        text="Scan QR code or login with credentials",
-        font=("Montserrat", 14),
-        justify="center"
-    )
-    info_label.pack(pady=10)
+    mp_label.pack(pady=20)
 
 def show_main_menu():
     # Clear existing widgets
