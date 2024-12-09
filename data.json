@@ -1,4 +1,9 @@
 {
+    "auth": {
+        "id_user": 1,
+        "username": "admin",
+        "password": "admin"
+    },
     "list_buku": [
         {
             "id_buku": 1,
@@ -215,6 +220,24 @@
             "tahun_terbit": "2011",
             "stock": "5",
             "rak": "A12"
+        },
+        {
+            "id_buku": 25,
+            "judul": "",
+            "pengarang": "",
+            "penerbit": "",
+            "tahun_terbit": "",
+            "stock": "",
+            "rak": ""
+        },
+        {
+            "id_buku": 26,
+            "judul": "ubdiawbdiu",
+            "pengarang": "udbiwvaiuvd",
+            "penerbit": "uvdiuvwauvdiv",
+            "tahun_terbit": 2006,
+            "stock": 829,
+            "rak": "A17"
         }
     ],
     "list_peminjaman": [],
