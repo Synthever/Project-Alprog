@@ -1,7 +1,7 @@
-import tkinter as tk
 from tkinter import messagebox
 import customtkinter
-import os
+import keyboard
+from PIL import Image
 
 # ambil data buku dari data.json
 import json
@@ -35,9 +35,19 @@ def auth():
     login_frame = customtkinter.CTkFrame(app)
     login_frame.pack(expand=True, padx=40, pady=40)
 
+    # Create a container frame for login form and image
+    content_frame = customtkinter.CTkFrame(login_frame)
+    content_frame.pack(expand=True)
+    content_frame.configure(fg_color="transparent")
+
+    # Left side - Login form
+    form_frame = customtkinter.CTkFrame(content_frame)
+    form_frame.pack(side="left", padx=20)
+    form_frame.configure(fg_color="transparent")
+
     # Login header
     header = customtkinter.CTkLabel(
-        login_frame,
+        form_frame,
         text="Login Sistem Perpustakaan",
         font=("Montserrat", 24, "bold"),
         text_color="#1f538d"
@@ -46,7 +56,7 @@ def auth():
 
     # Username field
     username_entry = customtkinter.CTkEntry(
-        login_frame,
+        form_frame,
         placeholder_text="Username",
         width=300,
         height=40,
@@ -56,7 +66,7 @@ def auth():
 
     # Password field 
     password_entry = customtkinter.CTkEntry(
-        login_frame,
+        form_frame,
         placeholder_text="Password",
         width=300,
         height=40,
@@ -79,8 +89,12 @@ def auth():
             messagebox.showerror("Error", "Username atau Password salah!")
 
     # Login button
+    def on_enter(event):
+        validate_login()
+    app.bind('<Return>', on_enter)
+    
     login_button = customtkinter.CTkButton(
-        login_frame,
+        form_frame,
         text="Login",
         command=validate_login,
         width=300,
@@ -91,6 +105,32 @@ def auth():
     )
     login_button.pack(pady=20)
 
+    # Left side - QR Image 
+    image_frame = customtkinter.CTkFrame(content_frame)
+    image_frame.pack(side="left", padx=20) # Changed from right to left
+    image_frame.configure(fg_color="transparent")
+
+    # Load and display QR image
+    qr_image = customtkinter.CTkImage(
+        light_image=Image.open("qr.png"),
+        dark_image=Image.open("qr.png"),
+        size=(200, 200)
+    )
+    qr_label = customtkinter.CTkLabel(
+        image_frame,
+        text="",
+        image=qr_image
+    )
+    qr_label.pack(pady=20)
+
+    # Display login message below QR
+    info_label = customtkinter.CTkLabel(
+        image_frame,
+        text="Scan QR code or login with credentials",
+        font=("Montserrat", 14),
+        justify="center"
+    )
+    info_label.pack(pady=10)
 
 def show_main_menu():
     # Clear existing widgets
@@ -172,6 +212,20 @@ def show_main_menu():
     )
     btn_crud_pengembalian.pack(pady=10)
 
+    # Logout button with new style
+    logout_button = customtkinter.CTkButton(
+        menu_frame,
+        text="Logout",
+        command=auth,
+        font=("Montserrat", 18),
+        width=300,
+        height=40,
+        corner_radius=10,
+        hover_color="#c42b2b", 
+        fg_color="#d64242"
+    )
+    logout_button.pack(pady=20)
+
 def show_crud_buku():
     for widget in app.winfo_children():
         widget.pack_forget()
@@ -236,6 +290,7 @@ def show_crud_buku():
     btn_update_buku = customtkinter.CTkButton(
         menu_frame,
         text="Ubah Data Buku",
+        command=update_buku,
         font=("Montserrat", 18),
         width=300,
         height=60,
@@ -581,6 +636,248 @@ def create_buku():
         hover_color="#333333"
     )
     btn_back.pack(side="left", padx=20)
+    
+def update_buku():
+    # ubah data buku berdasarkan ID buku yang diinput user
+    for widget in app.winfo_children():
+        widget.pack_forget()
+        
+    # Create main container
+    container = customtkinter.CTkFrame(app)
+    container.pack(fill="both", expand=True, padx=40, pady=40)
+    
+    # Header
+    welcome_label = customtkinter.CTkLabel(
+        container, 
+        text="Ubah Data Buku",  
+        font=("Montserrat", 32, "bold"),
+        text_color="#1f538d"
+    )
+    welcome_label.pack(pady=(20, 30))
+    
+    # Form container
+    form_frame = customtkinter.CTkFrame(container)
+    form_frame.pack(fill="x", padx=20)
+    form_frame.grid_columnconfigure((0,1), weight=1)
+    
+    # ID Input
+    label_id = customtkinter.CTkLabel(
+        form_frame,
+        text="Masukkan ID Buku yang akan diubah:",
+        font=("Montserrat", 16)
+    )
+    label_id.grid(row=0, column=0, padx=10, pady=(0,10), sticky="w")
+    
+    entry_id = customtkinter.CTkEntry(
+        form_frame,
+        placeholder_text="ID Buku",
+        width=300,
+        height=40,
+        font=("Montserrat", 14)
+    )
+    entry_id.grid(row=1, column=0, padx=10, pady=(0,20))
+    
+    # New data input
+    label_judul = customtkinter.CTkLabel(
+        form_frame,
+        text="Judul Buku Baru:",
+        font=("Montserrat", 16)
+    )
+    
+    entry_judul = customtkinter.CTkEntry(
+        form_frame,
+        placeholder_text="Judul Buku Baru",
+        width=300,
+        height=40,
+        font=("Montserrat", 14)
+    )
+    
+    label_pengarang = customtkinter.CTkLabel(
+        form_frame,
+        text="Pengarang Baru:",
+        font=("Montserrat", 16)
+    )
+    
+    entry_pengarang = customtkinter.CTkEntry(
+        form_frame,
+        placeholder_text="Pengarang Baru",
+        width=300,
+        height=40,
+        font=("Montserrat", 14)
+    )
+    
+    label_penerbit = customtkinter.CTkLabel(
+        form_frame,
+        text="Penerbit Baru:",
+        font=("Montserrat", 16)
+    )
+    
+    entry_penerbit = customtkinter.CTkEntry(
+        form_frame,
+        placeholder_text="Penerbit Baru",
+        width=300,
+        height=40,
+        font=("Montserrat", 14)
+    )
+    
+    label_tahun_terbit = customtkinter.CTkLabel(
+        form_frame,
+        text="Tahun Terbit Baru:",
+        font=("Montserrat", 16)
+    )
+    
+    entry_tahun_terbit = customtkinter.CTkEntry(
+        form_frame,
+        placeholder_text="Tahun Terbit Baru",
+        width=300,
+        height=40,
+        font=("Montserrat", 14)
+    )
+    
+    label_stok = customtkinter.CTkLabel(
+        form_frame,
+        text="Stok Baru:",
+        font=("Montserrat", 16)
+    )
+    
+    entry_stok = customtkinter.CTkEntry(
+        form_frame,
+        placeholder_text="Stok Baru",
+        width=300,
+        height=40,
+        font=("Montserrat", 14)
+    )
+    
+    label_rak = customtkinter.CTkLabel(
+        form_frame,
+        text="Rak Buku Baru:",
+        font=("Montserrat", 16)
+    )
+    
+    entry_rak = customtkinter.CTkEntry(
+        form_frame,
+        placeholder_text="Rak Buku Baru",
+        width=300,
+        height=40,
+        font=("Montserrat", 14)
+    )
+    
+    # Buttons container
+    button_frame = customtkinter.CTkFrame(container)
+    button_frame.pack(fill="x", pady=20)
+    button_frame.configure(fg_color="transparent")
+    
+    # Submit and Back buttons
+    def validate_and_update():
+        with open("data.json", "r") as file:
+            data = json.load(file)
+            list_buku = data['list_buku']
+            list_peminjaman = data['list_peminjaman']
+            list_pengembalian = data['list_pengembalian']
+        
+        if not entry_id.get():
+            messagebox.showerror("Error", "ID Buku harus diisi!")
+            return
+        try:
+            id_buku = int(entry_id.get())
+            if id_buku > len(list_buku) or id_buku < 1:
+                messagebox.showerror("Error", "ID Buku Tidak Ditemukan")
+            else:
+                if messagebox.askyesno("Konfirmasi", "Apakah anda yakin ingin mengubah data buku ini?"):
+                    list_buku[id_buku - 1]["judul"] = entry_judul.get()
+                    list_buku[id_buku - 1]["pengarang"] = entry_pengarang.get()
+                    list_buku[id_buku - 1]["penerbit"] = entry_penerbit.get()
+                    list_buku[id_buku - 1]["tahun_terbit"] = int(entry_tahun_terbit.get())
+                    list_buku[id_buku - 1]["stock"] = int(entry_stok.get())
+                    list_buku[id_buku - 1]["rak"] = entry_rak.get()
+                    with open("data.json", "w") as file:
+                        json.dump({
+                            "list_buku": list_buku,
+                            "list_peminjaman": list_peminjaman,
+                            "list_pengembalian": list_pengembalian
+                        }, file, indent=4)
+                    messagebox.showinfo("Success", "Data Buku Berhasil Diubah")
+        except ValueError:
+            messagebox.showerror("Error", "ID Buku harus berupa angka!")
+            
+    # Update submit button command
+    btn_submit = customtkinter.CTkButton(
+        button_frame,
+        text="Ubah Buku",
+        command=validate_and_update,
+        width=200,
+        height=40,
+        corner_radius=8,
+        font=("Montserrat", 14, "bold"),
+        fg_color="#FF9500",
+        hover_color="#FFA726"
+    )
+    btn_submit.pack(side="right", padx=20)
+    
+    btn_back = customtkinter.CTkButton(
+        button_frame,
+        text="← Kembali",
+        command=show_crud_buku,
+        width=200,
+        height=40,
+        corner_radius=8,
+        font=("Montserrat", 14, "bold"),
+        fg_color="#666666",
+        hover_color="#333333"
+    )
+    btn_back.pack(side="left", padx=20)
+    
+    # Hide all form fields initially
+    label_judul.grid_forget()
+    entry_judul.grid_forget()
+    label_pengarang.grid_forget()
+    entry_pengarang.grid_forget()
+    label_penerbit.grid_forget()
+    entry_penerbit.grid_forget()
+    label_tahun_terbit.grid_forget()
+    entry_tahun_terbit.grid_forget()
+    label_stok.grid_forget()
+    entry_stok.grid_forget()
+    label_rak.grid_forget()
+    entry_rak.grid_forget()
+    
+    # Function to show form fields based on ID input
+    def show_form_fields():
+        if not entry_id.get():
+            messagebox.showerror("Error", "ID Buku harus diisi!")
+            return
+        try:
+            id_buku = int(entry_id.get())
+            if id_buku > len(list_buku) or id_buku < 1:
+                messagebox.showerror("Error", "ID Buku Tidak Ditemukan")
+            else:
+                label_judul.grid(row=2, column=0, padx=10, pady=(5,0), sticky="w")
+                entry_judul.grid(row=3, column=0, padx=10, pady=(0,15))
+                label_pengarang.grid(row=2, column=1, padx=10, pady=(5,0), sticky="w")
+                entry_pengarang.grid(row=3, column=1, padx=10, pady=(0,15))
+                label_penerbit.grid(row=4, column=0, padx=10, pady=(5,0), sticky="w")
+                entry_penerbit.grid(row=5, column=0, padx=10, pady=(0,15))
+                label_tahun_terbit.grid(row=4, column=1, padx=10, pady=(5,0), sticky="w")
+                entry_tahun_terbit.grid(row=5, column=1, padx=10, pady=(0,15))
+                label_stok.grid(row=6, column=0, padx=10, pady=(5,0), sticky="w")
+                entry_stok.grid(row=7, column=0, padx=10, pady=(0,15))
+                label_rak.grid(row=6, column=1, padx=10, pady=(5,0), sticky="w")
+                entry_rak.grid(row=7, column=1, padx=10, pady=(0,15))
+                
+                entry_judul.insert(0, list_buku[id_buku - 1]["judul"])
+                entry_pengarang.insert(0, list_buku[id_buku - 1]["pengarang"])
+                entry_penerbit.insert(0, list_buku[id_buku - 1]["penerbit"])
+                entry_tahun_terbit.insert(0, list_buku[id_buku - 1]["tahun_terbit"])
+                entry_stok.insert(0, list_buku[id_buku - 1]["stock"])
+                entry_rak.insert(0, list_buku[id_buku - 1]["rak"])
+        except ValueError:
+            messagebox.showerror("Error", "ID Buku harus berupa angka!")
+            
+    # Update submit button command
+    btn_submit.configure(command=validate_and_update)
+    
+    # Update ID entry command
+    entry_id.bind("<Return>", lambda event: show_form_fields())
     
 def delete_buku():
     for widget in app.winfo_children():
