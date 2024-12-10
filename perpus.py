@@ -200,6 +200,18 @@ def show_main_menu():
         hover_color="#1f538d"
     )
     btn_crud_pengembalian.pack(pady=10)
+    
+    btn_crud_anggota = customtkinter.CTkButton(
+        menu_frame,
+        text="Kelola Data Anggota",
+        command=show_crud_anggota,
+        font=("Montserrat", 18),
+        width=300,
+        height=40,
+        corner_radius=10,
+        hover_color="#1f538d"
+    )
+    btn_crud_anggota.pack(pady=10)
 
     # Logout button with new style
     logout_button = customtkinter.CTkButton(
@@ -509,7 +521,105 @@ def show_crud_pengembalian():
         fg_color="#333333"
     )
     btn_back.pack(pady=30)
+    
+def show_crud_anggota():
+    for widget in app.winfo_children():
+        widget.pack_forget()
 
+    # Create main container frame
+    container = customtkinter.CTkFrame(app)
+    container.pack(fill="both", expand=True, padx=40, pady=40)
+    
+    # Header section
+    header_frame = customtkinter.CTkFrame(container)
+    header_frame.pack(fill="x", pady=(20, 40))
+    header_frame.configure(fg_color="transparent")
+    
+    welcome_label = customtkinter.CTkLabel(
+        header_frame, 
+        text="Menu Kelola Pengembalian",
+        font=("Montserrat", 38, "bold"),
+        text_color="#1f538d"
+    )
+    welcome_label.pack(pady=10)
+    
+    subtitle = customtkinter.CTkLabel(
+        header_frame,
+        text="Silahkan pilih menu yang tersedia",
+        font=("Montserrat", 16),
+        text_color="#FFFFFF"
+    )
+    subtitle.pack()
+
+    # Menu buttons section
+    menu_frame = customtkinter.CTkFrame(container)
+    menu_frame.pack(pady=20)
+    menu_frame.configure(fg_color="transparent")
+
+    # Create styled buttons
+    btn_read_anggota = customtkinter.CTkButton(
+        menu_frame,
+        text="List Data Anggota",
+        font=("Montserrat", 18),
+        width=300,
+        height=60,
+        corner_radius=15,
+        hover_color="#1f538d",
+        fg_color="#2b6595"
+    )
+    btn_read_anggota.pack(pady=15)
+
+    btn_create_anggota = customtkinter.CTkButton(
+        menu_frame,
+        text="Tambah Anggota Baru",
+        font=("Montserrat", 18),
+        width=300,
+        height=60,
+        corner_radius=15,
+        hover_color="#1f538d",
+        fg_color="#2b6595"
+    )
+    btn_create_anggota.pack(pady=15)
+    
+    btn_update_anggota = customtkinter.CTkButton(
+        menu_frame,
+        text="Ubah Data Anggota",
+        font=("Montserrat", 18),
+        width=300,
+        height=60,
+        corner_radius=15,
+        hover_color="#1f538d",
+        fg_color="#2b6595"
+    )
+    btn_update_anggota.pack(pady=15)
+    
+    btn_delete_anggota = customtkinter.CTkButton(
+        menu_frame,
+        text="Hapus Data Anggota",
+        font=("Montserrat", 18),
+        width=300,
+        height=60,
+        corner_radius=15,
+        hover_color="#1f538d",
+        fg_color="#2b6595"
+    )
+    btn_delete_anggota.pack(pady=15)
+
+    # Back button with new style
+    btn_back = customtkinter.CTkButton(
+        container,
+        text="← Kembali ke Menu Utama",
+        command=show_main_menu,
+        font=("Montserrat", 14),
+        width=200,
+        height=40,
+        corner_radius=10,
+        hover_color="#1f538d",
+        fg_color="#333333"
+    )
+    btn_back.pack(pady=30)
+
+# ================================= BUKU FUNCTIONS =================================
 def create_buku():
     for widget in app.winfo_children():
         widget.pack_forget()
@@ -950,7 +1060,6 @@ def delete_buku():
     )
     btn_back.pack(side="left", padx=20)
 
-# =================================== SUBMIT BOOK FUNCTION ===================================
 def submit_buku(judul, pengarang, penerbit, tahun_terbit, stok, rak):
     list_buku.append({
         "id_buku": len(list_buku) + 1,
@@ -972,9 +1081,7 @@ def submit_buku(judul, pengarang, penerbit, tahun_terbit, stok, rak):
     messagebox.showinfo("Success", "Data Buku Berhasil Ditambahkan")
 
     show_crud_buku()
-# =================================== SUBMIT BOOK FUNCTION ===================================
 
-# =================================== DELETE BOOK FUNCTION ===================================
 def del_buku(id_buku):
     id_buku = int(id_buku)
     with open("data.json", "r") as file:
@@ -993,8 +1100,6 @@ def del_buku(id_buku):
         messagebox.showinfo("Success", "Data Buku Berhasil Dihapus")
 
     show_crud_buku()
-#  =================================== DELETE BOOK FUNCTION ===================================
-
 class ScrollableLabelButtonFrame(customtkinter.CTkScrollableFrame):
     def __init__(self, master, command=None, **kwargs):
         super().__init__(master, **kwargs)
@@ -1060,6 +1165,149 @@ def read_buku():
         hover_color="#1f538d"
     )
     btn_back.pack(pady=20)
+    
+# ================================= BUKU FUNCTIONS =================================
+
+# ================================= ANGGOTA FUNCTIONS =================================
+
+def create_anggota():
+    for widget in app.winfo_children():
+        widget.pack_forget()
+
+    # Create main container
+    container = customtkinter.CTkFrame(app)
+    container.pack(fill="both", expand=True, padx=40, pady=40)
+    
+    # Header
+    welcome_label = customtkinter.CTkLabel(
+        container, 
+        text="Tambahkan Data Anggota",  
+        font=("Montserrat", 32, "bold"),
+        text_color="#1f538d"
+    )
+    welcome_label.pack(pady=(20, 30))
+
+    # Form container
+    form_frame = customtkinter.CTkFrame(container)
+    form_frame.pack(fill="x", padx=20)
+    form_frame.grid_columnconfigure((0,1), weight=1)
+
+    # Row 1: Username
+    label_username = customtkinter.CTkLabel(form_frame, text="Username:", font=("Montserrat", 14))
+    label_username.grid(row=2, column=0, padx=10, pady=(5,0), sticky="w")
+    entry_username = customtkinter.CTkEntry(form_frame, placeholder_text="Masukkan username", width=250)
+    entry_username.grid(row=3, column=0, padx=10, pady=(0,15))
+    
+    # Row 1: Nama Anggota
+    label_nama = customtkinter.CTkLabel(form_frame, text="Nama Anggota:", font=("Montserrat", 14))
+    label_nama.grid(row=0, column=0, padx=10, pady=(5,0), sticky="w")
+    entry_nama = customtkinter.CTkEntry(form_frame, placeholder_text="Masukkan nama anggota", width=250)
+    entry_nama.grid(row=1, column=0, padx=10, pady=(0,15))
+    
+    # Row 2: Jenis Kelamin
+    label_gender = customtkinter.CTkLabel(form_frame, text="Jenis Kelamin:", font=("Montserrat", 14))
+    label_gender.grid(row=0, column=1, padx=10, pady=(5,0), sticky="w")
+    
+    gender_var = customtkinter.StringVar(value="Laki-laki")
+    gender_frame = customtkinter.CTkFrame(form_frame)
+    gender_frame.grid(row=1, column=1, padx=10, pady=(0,15), sticky="w")
+    gender_frame.configure(fg_color="transparent")
+    
+    radio_laki = customtkinter.CTkRadioButton(
+        gender_frame,
+        text="Laki-laki",
+        variable=gender_var,
+        value="Laki-laki",
+        font=("Montserrat", 12)
+    )
+    radio_laki.pack(side="left", padx=(0,20))
+    
+    radio_perempuan = customtkinter.CTkRadioButton(
+        gender_frame,
+        text="Perempuan", 
+        variable=gender_var,
+        value="Perempuan",
+        font=("Montserrat", 12)
+    )
+    radio_perempuan.pack(side="left")
+
+    # Row 2: No Telp
+    label_telp = customtkinter.CTkLabel(form_frame, text="Nomor Telp:", font=("Montserrat", 14))
+    label_telp.grid(row=2, column=1, padx=10, pady=(5,0), sticky="w")
+    entry_telp = customtkinter.CTkEntry(form_frame, placeholder_text="Masukkan nomor telepon", width=250)
+    entry_telp.grid(row=3, column=1, padx=10, pady=(0,15))
+
+    # Row 3: Alamat
+    label_stok = customtkinter.CTkLabel(form_frame, text="Jumlah Stok:", font=("Montserrat", 14))
+    label_stok.grid(row=4, column=0, padx=10, pady=(5,0), sticky="w")
+    entry_stok = customtkinter.CTkEntry(form_frame, placeholder_text="Masukkan jumlah stok", width=250)
+    entry_stok.grid(row=5, column=0, padx=10, pady=(0,15))
+
+    label_rak = customtkinter.CTkLabel(form_frame, text="Rak Buku:", font=("Montserrat", 14))
+    label_rak.grid(row=4, column=1, padx=10, pady=(5,0), sticky="w")
+    entry_rak = customtkinter.CTkEntry(form_frame, placeholder_text="Masukkan nomor rak", width=250)
+    entry_rak.grid(row=5, column=1, padx=10, pady=(0,15))
+
+    # Buttons container
+    button_frame = customtkinter.CTkFrame(container)
+    button_frame.pack(fill="x", pady=30)
+    button_frame.configure(fg_color="transparent")
+
+    # Submit and Back buttons
+    def validate_and_confirm():
+        # Check if all fields are filled
+        if not entry_judul.get() or not entry_pengarang.get() or not entry_penerbit.get() or \
+           not entry_tahun_terbit.get() or not entry_stok.get() or not entry_rak.get():
+            messagebox.showerror("Error", "Semua field harus diisi!")
+            return
+
+        # Validate numeric fields
+        try:
+            tahun = int(entry_tahun_terbit.get())
+            stok = int(entry_stok.get())
+            if tahun < 1 or stok < 0:
+                messagebox.showerror("Error", "Tahun terbit dan stok harus berupa angka positif!")
+                return
+        except ValueError:
+            messagebox.showerror("Error", "Tahun terbit dan stok harus berupa angka!")
+            return
+        
+        # Show confirmation dialog
+        if messagebox.askyesno("Konfirmasi", "Apakah anda yakin ingin menambahkan data buku ini?"):
+            submit_buku(
+                entry_judul.get(),
+                entry_pengarang.get(),
+                entry_penerbit.get(),
+                tahun,
+                stok,
+                entry_rak.get()
+            )
+
+    # Update submit button command
+    btn_submit = customtkinter.CTkButton(
+        button_frame, 
+        text="Submit",
+        command=validate_and_confirm,
+        width=200,
+        height=40,
+        corner_radius=8,
+        font=("Montserrat", 14, "bold"),
+        hover_color="#1f538d"
+    )
+    btn_submit.pack(side="right", padx=20)
+
+    btn_back = customtkinter.CTkButton(
+        button_frame, 
+        text="← Kembali",
+        command=show_crud_buku,
+        width=200,
+        height=40,
+        corner_radius=8,
+        font=("Montserrat", 14, "bold"),
+        fg_color="#666666",
+        hover_color="#333333"
+    )
+    btn_back.pack(side="left", padx=20)
 
 # run the app
 auth()
