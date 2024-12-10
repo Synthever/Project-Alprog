@@ -1238,15 +1238,16 @@ def create_anggota():
     entry_telp.grid(row=3, column=1, padx=10, pady=(0,15))
 
     # Row 3: Alamat
-    label_stok = customtkinter.CTkLabel(form_frame, text="Jumlah Stok:", font=("Montserrat", 14))
+    label_stok = customtkinter.CTkLabel(form_frame, text="Alamat:", font=("Montserrat", 14))
     label_stok.grid(row=4, column=0, padx=10, pady=(5,0), sticky="w")
     entry_stok = customtkinter.CTkEntry(form_frame, placeholder_text="Masukkan jumlah stok", width=250)
     entry_stok.grid(row=5, column=0, padx=10, pady=(0,15))
 
-    label_rak = customtkinter.CTkLabel(form_frame, text="Rak Buku:", font=("Montserrat", 14))
-    label_rak.grid(row=4, column=1, padx=10, pady=(5,0), sticky="w")
-    entry_rak = customtkinter.CTkEntry(form_frame, placeholder_text="Masukkan nomor rak", width=250)
-    entry_rak.grid(row=5, column=1, padx=10, pady=(0,15))
+    # Row 3: Email
+    label_email = customtkinter.CTkLabel(form_frame, text="Alamat Email:", font=("Montserrat", 14))
+    label_email.grid(row=4, column=1, padx=10, pady=(5,0), sticky="w")
+    entry_email = customtkinter.CTkEntry(form_frame, placeholder_text="Masukkan alamat email", width=250)
+    entry_email.grid(row=5, column=1, padx=10, pady=(0,15))
 
     # Buttons container
     button_frame = customtkinter.CTkFrame(container)
