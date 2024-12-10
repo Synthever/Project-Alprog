@@ -7,10 +7,11 @@ from PIL import Image
 import json
 with open("data.json", "r") as file:
     data = json.load(file)
+    auth = data['auth']
     list_buku = data['list_buku']
     list_peminjaman = data['list_peminjaman']
     list_pengembalian = data['list_pengembalian']
-    auth = data['auth']
+    list_anggota = data['list_anggota']
 
 
 # Custom Tkinter System Setting
@@ -560,6 +561,7 @@ def show_crud_anggota():
     btn_read_anggota = customtkinter.CTkButton(
         menu_frame,
         text="List Data Anggota",
+        command=read_anggota,
         font=("Montserrat", 18),
         width=300,
         height=60,
@@ -572,6 +574,7 @@ def show_crud_anggota():
     btn_create_anggota = customtkinter.CTkButton(
         menu_frame,
         text="Tambah Anggota Baru",
+        command=create_anggota,
         font=("Montserrat", 18),
         width=300,
         height=60,
@@ -1073,9 +1076,11 @@ def submit_buku(judul, pengarang, penerbit, tahun_terbit, stok, rak):
 
     with open("data.json", "w") as file:
         json.dump({
+            "auth": auth,
             "list_buku": list_buku,
             "list_peminjaman": list_peminjaman,
-            "list_pengembalian": list_pengembalian
+            "list_pengembalian": list_pengembalian,
+            "list_anggota": list_anggota
         }, file, indent=4)
 
     messagebox.showinfo("Success", "Data Buku Berhasil Ditambahkan")
@@ -1150,7 +1155,7 @@ def read_buku():
         list_buku = data['list_buku']
 
     for buku in list_buku:
-        book_info = f"\tID: {buku['id_buku']} \t| Judul: {buku['judul']} | Pengarang: {buku['pengarang']} | Penerbit: {buku['penerbit']} | Tahun: {buku['tahun_terbit']} | Stok: {buku['stock']} | Rak: {buku['rak']}"
+        book_info = f"ID: {buku['id_buku']} \t| Judul: {buku['judul']} | Pengarang: {buku['pengarang']} | Penerbit: {buku['penerbit']} | Tahun: {buku['tahun_terbit']} | Stok: {buku['stock']} | Rak: {buku['rak']}"
         frame.add_item(book_info)
 
     # Styled back button
@@ -1169,6 +1174,58 @@ def read_buku():
 # ================================= BUKU FUNCTIONS =================================
 
 # ================================= ANGGOTA FUNCTIONS =================================
+
+def read_anggota():
+    for widget in app.winfo_children():
+        widget.pack_forget()
+
+    # Create main container frame
+    container = customtkinter.CTkFrame(app)
+    container.pack(fill="both", expand=True, padx=20, pady=20)
+
+    # Stylish header
+    header_frame = customtkinter.CTkFrame(container)
+    header_frame.pack(fill="x", pady=(0, 20))
+    
+    welcome_label = customtkinter.CTkLabel(
+        header_frame, 
+        text="List Data Anggota",  
+        font=("montserrat", 32, "bold"),
+        text_color="#1f538d"
+    )
+    welcome_label.pack(pady=20)
+
+    frame = ScrollableLabelButtonFrame(
+        container,
+        width=900,
+        height=400,
+        corner_radius=10,
+        fg_color=("#FFFFFF", "#333333"),
+        border_color="#1f538d",
+        border_width=2
+    )
+    frame.pack(expand=True, fill="both", padx=20, pady=10)
+
+    with open("data.json", "r") as file:
+        data = json.load(file)
+        list_anggota = data['list_anggota']
+
+    for anggota in list_anggota:
+        anggota_info = f"ID: {anggota['id_anggota']} \t| Username: {anggota['username']} | Nama: {anggota['nama']} | Gender: {anggota['gender']} | Telp: {anggota['telp']} | Alamat: {anggota['alamat']} | Email: {anggota['email']}"
+        frame.add_item(anggota_info)
+
+    # Styled back button
+    btn_back = customtkinter.CTkButton(
+        container,
+        text="← Kembali",
+        command=show_crud_anggota,
+        width=120,
+        height=32,
+        corner_radius=8,
+        font=("montserrat", 14, "bold"),
+        hover_color="#1f538d"
+    )
+    btn_back.pack(pady=20)
 
 def create_anggota():
     for widget in app.winfo_children():
@@ -1238,10 +1295,10 @@ def create_anggota():
     entry_telp.grid(row=3, column=1, padx=10, pady=(0,15))
 
     # Row 3: Alamat
-    label_stok = customtkinter.CTkLabel(form_frame, text="Alamat:", font=("Montserrat", 14))
-    label_stok.grid(row=4, column=0, padx=10, pady=(5,0), sticky="w")
-    entry_stok = customtkinter.CTkEntry(form_frame, placeholder_text="Masukkan jumlah stok", width=250)
-    entry_stok.grid(row=5, column=0, padx=10, pady=(0,15))
+    label_alamat = customtkinter.CTkLabel(form_frame, text="Alamat:", font=("Montserrat", 14))
+    label_alamat.grid(row=4, column=0, padx=10, pady=(5,0), sticky="w")
+    entry_alamat = customtkinter.CTkEntry(form_frame, placeholder_text="Masukkan alamat lengkap", width=250)
+    entry_alamat.grid(row=5, column=0, padx=10, pady=(0,15))
 
     # Row 3: Email
     label_email = customtkinter.CTkLabel(form_frame, text="Alamat Email:", font=("Montserrat", 14))
@@ -1257,31 +1314,30 @@ def create_anggota():
     # Submit and Back buttons
     def validate_and_confirm():
         # Check if all fields are filled
-        if not entry_judul.get() or not entry_pengarang.get() or not entry_penerbit.get() or \
-           not entry_tahun_terbit.get() or not entry_stok.get() or not entry_rak.get():
+        if not entry_username.get() or not entry_nama.get() or \
+           not entry_telp.get() or not entry_alamat.get() or not entry_email.get():
             messagebox.showerror("Error", "Semua field harus diisi!")
             return
 
-        # Validate numeric fields
-        try:
-            tahun = int(entry_tahun_terbit.get())
-            stok = int(entry_stok.get())
-            if tahun < 1 or stok < 0:
-                messagebox.showerror("Error", "Tahun terbit dan stok harus berupa angka positif!")
-                return
-        except ValueError:
-            messagebox.showerror("Error", "Tahun terbit dan stok harus berupa angka!")
+        # Validate phone number
+        if not entry_telp.get().isdigit():
+            messagebox.showerror("Error", "Nomor telepon harus berupa angka!")
+            return
+
+        # Validate email format
+        if '@' not in entry_email.get() or '.' not in entry_email.get():
+            messagebox.showerror("Error", "Format email tidak valid!")
             return
         
         # Show confirmation dialog
-        if messagebox.askyesno("Konfirmasi", "Apakah anda yakin ingin menambahkan data buku ini?"):
-            submit_buku(
-                entry_judul.get(),
-                entry_pengarang.get(),
-                entry_penerbit.get(),
-                tahun,
-                stok,
-                entry_rak.get()
+        if messagebox.askyesno("Konfirmasi", "Apakah anda yakin ingin menambahkan data anggota ini?"):
+            submit_anggota(
+                entry_username.get(),
+                entry_nama.get(),
+                gender_var.get(),
+                entry_telp.get(), 
+                entry_alamat.get(),
+                entry_email.get()
             )
 
     # Update submit button command
@@ -1300,7 +1356,7 @@ def create_anggota():
     btn_back = customtkinter.CTkButton(
         button_frame, 
         text="← Kembali",
-        command=show_crud_buku,
+        command=show_crud_anggota,
         width=200,
         height=40,
         corner_radius=8,
@@ -1309,6 +1365,30 @@ def create_anggota():
         hover_color="#333333"
     )
     btn_back.pack(side="left", padx=20)
+    
+def submit_anggota(username, nama, gender, telp, alamat, email):
+    list_anggota.append({
+        "id_anggota": len(list_anggota) + 1,
+        "username": username,
+        "nama": nama,
+        "gender": gender,
+        "telp": telp,
+        "alamat": alamat,
+        "email": email
+    })
+
+    with open("data.json", "w") as file:
+        json.dump({
+            "auth": auth,
+            "list_buku": list_buku, 
+            "list_peminjaman": list_peminjaman,
+            "list_pengembalian": list_pengembalian,
+            "list_anggota": list_anggota
+        }, file, indent=4)
+
+    messagebox.showinfo("Success", "Data Anggota Berhasil Ditambahkan")
+
+    show_crud_anggota()
 
 # run the app
 auth()
