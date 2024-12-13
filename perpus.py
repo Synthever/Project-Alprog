@@ -5,7 +5,7 @@ from PIL import Image
 
 # ambil data buku dari data.json
 import json
-with open("data.json", "r") as file:
+with open("data.json") as file:
     data = json.load(file)
     auth = data['auth']
     list_buku = data['list_buku']
@@ -740,10 +740,9 @@ def create_buku():
     btn_back.pack(side="left", padx=20)
     
 def update_buku():
-    # ubah data buku berdasarkan ID buku yang diinput user
     for widget in app.winfo_children():
         widget.pack_forget()
-        
+
     # Create main container
     container = customtkinter.CTkFrame(app)
     container.pack(fill="both", expand=True, padx=40, pady=40)
@@ -779,208 +778,173 @@ def update_buku():
     )
     entry_id.grid(row=1, column=0, padx=10, pady=(0,20))
     
-    # New data input
-    label_judul = customtkinter.CTkLabel(
+    btn_submit = customtkinter.CTkButton(
         form_frame,
-        text="Judul Buku Baru:",
-        font=("Montserrat", 16)
-    )
-    
-    entry_judul = customtkinter.CTkEntry(
-        form_frame,
-        placeholder_text="Judul Buku Baru",
-        width=300,
+        text="Submit",
+        command=lambda: form_update_buku(entry_id.get()),
+        width=200,
         height=40,
-        font=("Montserrat", 14)
+        corner_radius=8,
+        font=("Montserrat", 14, "bold"),
+        hover_color="#FFA726",
+        fg_color="#FF9500"
     )
+    btn_submit.grid(row=1, column=1, padx=10, pady=(0,20))
     
-    label_pengarang = customtkinter.CTkLabel(
-        form_frame,
-        text="Pengarang Baru:",
-        font=("Montserrat", 16)
-    )
-    
-    entry_pengarang = customtkinter.CTkEntry(
-        form_frame,
-        placeholder_text="Pengarang Baru",
-        width=300,
+    # Back button
+    btn_back = customtkinter.CTkButton(
+        container,
+        text="← Kembali ke Menu Utama",
+        command=show_main_menu,
+        font=("Montserrat", 14),
+        width=200,
         height=40,
-        font=("Montserrat", 14)
+        corner_radius=10,
+        hover_color="#1f538d",
+        fg_color="#333333"
     )
+    btn_back.pack(pady=30)
     
-    label_penerbit = customtkinter.CTkLabel(
-        form_frame,
-        text="Penerbit Baru:",
-        font=("Montserrat", 16)
-    )
-    
-    entry_penerbit = customtkinter.CTkEntry(
-        form_frame,
-        placeholder_text="Penerbit Baru",
-        width=300,
-        height=40,
-        font=("Montserrat", 14)
-    )
-    
-    label_tahun_terbit = customtkinter.CTkLabel(
-        form_frame,
-        text="Tahun Terbit Baru:",
-        font=("Montserrat", 16)
-    )
-    
-    entry_tahun_terbit = customtkinter.CTkEntry(
-        form_frame,
-        placeholder_text="Tahun Terbit Baru",
-        width=300,
-        height=40,
-        font=("Montserrat", 14)
-    )
-    
-    label_stok = customtkinter.CTkLabel(
-        form_frame,
-        text="Stok Baru:",
-        font=("Montserrat", 16)
-    )
-    
-    entry_stok = customtkinter.CTkEntry(
-        form_frame,
-        placeholder_text="Stok Baru",
-        width=300,
-        height=40,
-        font=("Montserrat", 14)
-    )
-    
-    label_rak = customtkinter.CTkLabel(
-        form_frame,
-        text="Rak Buku Baru:",
-        font=("Montserrat", 16)
-    )
-    
-    entry_rak = customtkinter.CTkEntry(
-        form_frame,
-        placeholder_text="Rak Buku Baru",
-        width=300,
-        height=40,
-        font=("Montserrat", 14)
-    )
-    
-    # Buttons container
-    button_frame = customtkinter.CTkFrame(container)
-    button_frame.pack(fill="x", pady=20)
-    button_frame.configure(fg_color="transparent")
-    
-    # Submit and Back buttons
-    def validate_and_update():
+def form_update_buku(id_buku):
+    try:
+        id_buku = int(id_buku)
         with open("data.json", "r") as file:
             data = json.load(file)
-            list_buku = data['list_buku']
-            list_peminjaman = data['list_peminjaman']
-            list_pengembalian = data['list_pengembalian']
+            list_buku = data["list_buku"]
+            
+        if id_buku < 1 or id_buku > len(list_buku):
+            messagebox.showerror("Error", "ID Buku tidak ditemukan!")
+            return
+            
+        buku = list_buku[id_buku-1]
         
-        if not entry_id.get():
-            messagebox.showerror("Error", "ID Buku harus diisi!")
-            return
-        try:
-            id_buku = int(entry_id.get())
-            if id_buku > len(list_buku) or id_buku < 1:
-                messagebox.showerror("Error", "ID Buku Tidak Ditemukan")
-            else:
+        for widget in app.winfo_children():
+            widget.pack_forget()
+            
+        # Create main container
+        container = customtkinter.CTkFrame(app)
+        container.pack(fill="both", expand=True, padx=40, pady=40)
+        
+        # Header
+        header_label = customtkinter.CTkLabel(
+            container,
+            text=f"Update Buku ID: {id_buku}",
+            font=("Montserrat", 32, "bold"),
+            text_color="#1f538d"
+        )
+        header_label.pack(pady=(20, 30))
+
+        # Form container
+        form_frame = customtkinter.CTkFrame(container)
+        form_frame.pack(fill="x", padx=20)
+        form_frame.grid_columnconfigure((0,1), weight=1)
+
+        # Form fields
+        label_judul = customtkinter.CTkLabel(form_frame, text="Judul Buku:", font=("Montserrat", 14))
+        label_judul.grid(row=0, column=0, padx=10, pady=(5,0), sticky="w")
+        entry_judul = customtkinter.CTkEntry(form_frame, width=250)
+        entry_judul.insert(0, buku["judul"])
+        entry_judul.grid(row=1, column=0, padx=10, pady=(0,15))
+
+        label_pengarang = customtkinter.CTkLabel(form_frame, text="Pengarang:", font=("Montserrat", 14))
+        label_pengarang.grid(row=0, column=1, padx=10, pady=(5,0), sticky="w")
+        entry_pengarang = customtkinter.CTkEntry(form_frame, width=250)
+        entry_pengarang.insert(0, buku["pengarang"])
+        entry_pengarang.grid(row=1, column=1, padx=10, pady=(0,15))
+
+        label_penerbit = customtkinter.CTkLabel(form_frame, text="Penerbit:", font=("Montserrat", 14))
+        label_penerbit.grid(row=2, column=0, padx=10, pady=(5,0), sticky="w")
+        entry_penerbit = customtkinter.CTkEntry(form_frame, width=250)
+        entry_penerbit.insert(0, buku["penerbit"])
+        entry_penerbit.grid(row=3, column=0, padx=10, pady=(0,15))
+
+        label_tahun = customtkinter.CTkLabel(form_frame, text="Tahun Terbit:", font=("Montserrat", 14))
+        label_tahun.grid(row=2, column=1, padx=10, pady=(5,0), sticky="w")
+        entry_tahun = customtkinter.CTkEntry(form_frame, width=250)
+        entry_tahun.insert(0, buku["tahun_terbit"])
+        entry_tahun.grid(row=3, column=1, padx=10, pady=(0,15))
+
+        label_stok = customtkinter.CTkLabel(form_frame, text="Stok:", font=("Montserrat", 14))
+        label_stok.grid(row=4, column=0, padx=10, pady=(5,0), sticky="w")
+        entry_stok = customtkinter.CTkEntry(form_frame, width=250)
+        entry_stok.insert(0, buku["stock"])
+        entry_stok.grid(row=5, column=0, padx=10, pady=(0,15))
+
+        label_rak = customtkinter.CTkLabel(form_frame, text="Rak:", font=("Montserrat", 14))
+        label_rak.grid(row=4, column=1, padx=10, pady=(5,0), sticky="w")
+        entry_rak = customtkinter.CTkEntry(form_frame, width=250)
+        entry_rak.insert(0, buku["rak"])
+        entry_rak.grid(row=5, column=1, padx=10, pady=(0,15))
+
+        # Button container
+        button_frame = customtkinter.CTkFrame(container)
+        button_frame.pack(fill="x", pady=20)
+        button_frame.configure(fg_color="transparent")
+
+        def save_changes():
+            try:
+                # Validate fields
+                if not all([entry_judul.get(), entry_pengarang.get(), entry_penerbit.get(),
+                           entry_tahun.get(), entry_stok.get(), entry_rak.get()]):
+                    messagebox.showerror("Error", "Semua field harus diisi!")
+                    return
+                    
+                tahun = int(entry_tahun.get())
+                stok = int(entry_stok.get())
+                if tahun < 1 or stok < 0:
+                    messagebox.showerror("Error", "Tahun dan stok harus berupa angka positif!")
+                    return
+
                 if messagebox.askyesno("Konfirmasi", "Apakah anda yakin ingin mengubah data buku ini?"):
-                    list_buku[id_buku - 1]["judul"] = entry_judul.get()
-                    list_buku[id_buku - 1]["pengarang"] = entry_pengarang.get()
-                    list_buku[id_buku - 1]["penerbit"] = entry_penerbit.get()
-                    list_buku[id_buku - 1]["tahun_terbit"] = int(entry_tahun_terbit.get())
-                    list_buku[id_buku - 1]["stock"] = int(entry_stok.get())
-                    list_buku[id_buku - 1]["rak"] = entry_rak.get()
+                    # Update book data
+                    list_buku[id_buku-1].update({
+                        "judul": entry_judul.get(),
+                        "pengarang": entry_pengarang.get(),
+                        "penerbit": entry_penerbit.get(),
+                        "tahun_terbit": tahun,
+                        "stock": stok,
+                        "rak": entry_rak.get()
+                    })
+                    
+                    # Save to file
                     with open("data.json", "w") as file:
-                        json.dump({
-                            "list_buku": list_buku,
-                            "list_peminjaman": list_peminjaman,
-                            "list_pengembalian": list_pengembalian
-                        }, file, indent=4)
-                    messagebox.showinfo("Success", "Data Buku Berhasil Diubah")
-        except ValueError:
-            messagebox.showerror("Error", "ID Buku harus berupa angka!")
-            
-    # Update submit button command
-    btn_submit = customtkinter.CTkButton(
-        button_frame,
-        text="Ubah Buku",
-        command=validate_and_update,
-        width=200,
-        height=40,
-        corner_radius=8,
-        font=("Montserrat", 14, "bold"),
-        fg_color="#FF9500",
-        hover_color="#FFA726"
-    )
-    btn_submit.pack(side="right", padx=20)
-    
-    btn_back = customtkinter.CTkButton(
-        button_frame,
-        text="← Kembali",
-        command=show_crud_buku,
-        width=200,
-        height=40,
-        corner_radius=8,
-        font=("Montserrat", 14, "bold"),
-        fg_color="#666666",
-        hover_color="#333333"
-    )
-    btn_back.pack(side="left", padx=20)
-    
-    # Hide all form fields initially
-    label_judul.grid_forget()
-    entry_judul.grid_forget()
-    label_pengarang.grid_forget()
-    entry_pengarang.grid_forget()
-    label_penerbit.grid_forget()
-    entry_penerbit.grid_forget()
-    label_tahun_terbit.grid_forget()
-    entry_tahun_terbit.grid_forget()
-    label_stok.grid_forget()
-    entry_stok.grid_forget()
-    label_rak.grid_forget()
-    entry_rak.grid_forget()
-    
-    # Function to show form fields based on ID input
-    def show_form_fields():
-        if not entry_id.get():
-            messagebox.showerror("Error", "ID Buku harus diisi!")
-            return
-        try:
-            id_buku = int(entry_id.get())
-            if id_buku > len(list_buku) or id_buku < 1:
-                messagebox.showerror("Error", "ID Buku Tidak Ditemukan")
-            else:
-                label_judul.grid(row=2, column=0, padx=10, pady=(5,0), sticky="w")
-                entry_judul.grid(row=3, column=0, padx=10, pady=(0,15))
-                label_pengarang.grid(row=2, column=1, padx=10, pady=(5,0), sticky="w")
-                entry_pengarang.grid(row=3, column=1, padx=10, pady=(0,15))
-                label_penerbit.grid(row=4, column=0, padx=10, pady=(5,0), sticky="w")
-                entry_penerbit.grid(row=5, column=0, padx=10, pady=(0,15))
-                label_tahun_terbit.grid(row=4, column=1, padx=10, pady=(5,0), sticky="w")
-                entry_tahun_terbit.grid(row=5, column=1, padx=10, pady=(0,15))
-                label_stok.grid(row=6, column=0, padx=10, pady=(5,0), sticky="w")
-                entry_stok.grid(row=7, column=0, padx=10, pady=(0,15))
-                label_rak.grid(row=6, column=1, padx=10, pady=(5,0), sticky="w")
-                entry_rak.grid(row=7, column=1, padx=10, pady=(0,15))
-                
-                entry_judul.insert(0, list_buku[id_buku - 1]["judul"])
-                entry_pengarang.insert(0, list_buku[id_buku - 1]["pengarang"])
-                entry_penerbit.insert(0, list_buku[id_buku - 1]["penerbit"])
-                entry_tahun_terbit.insert(0, list_buku[id_buku - 1]["tahun_terbit"])
-                entry_stok.insert(0, list_buku[id_buku - 1]["stock"])
-                entry_rak.insert(0, list_buku[id_buku - 1]["rak"])
-        except ValueError:
-            messagebox.showerror("Error", "ID Buku harus berupa angka!")
-            
-    # Update submit button command
-    btn_submit.configure(command=validate_and_update)
-    
-    # Update ID entry command
-    entry_id.bind("<Return>", lambda event: show_form_fields())
-    
+                        json.dump(data, file, indent=4)
+                    
+                    messagebox.showinfo("Sukses", "Data buku berhasil diperbarui!")
+                    show_crud_buku()
+                    
+            except ValueError:
+                messagebox.showerror("Error", "Tahun dan stok harus berupa angka!")
+
+        btn_save = customtkinter.CTkButton(
+            button_frame,
+            text="Simpan Perubahan",
+            command=save_changes,
+            width=200,
+            height=40,
+            corner_radius=8,
+            font=("Montserrat", 14, "bold"),
+            fg_color="#FF9500",
+            hover_color="#FFA726"
+        )
+        btn_save.pack(side="right", padx=20)
+
+        btn_back = customtkinter.CTkButton(
+            button_frame,
+            text="← Kembali",
+            command=update_buku,
+            width=200,
+            height=40,
+            corner_radius=8,
+            font=("Montserrat", 14, "bold"),
+            fg_color="#666666",
+            hover_color="#333333"
+        )
+        btn_back.pack(side="left", padx=20)
+        
+    except ValueError:
+        messagebox.showerror("Error", "ID Buku harus berupa angka!")
+
 def delete_buku():
     for widget in app.winfo_children():
         widget.pack_forget()
@@ -1064,6 +1028,16 @@ def delete_buku():
     btn_back.pack(side="left", padx=20)
 
 def submit_buku(judul, pengarang, penerbit, tahun_terbit, stok, rak):
+    # Read current data
+    with open("data.json", "r") as file:
+        data = json.load(file)
+        list_buku = data['list_buku']
+        list_peminjaman = data.get('list_peminjaman', [])
+        list_pengembalian = data.get('list_pengembalian', [])
+        list_anggota = data.get('list_anggota', [])
+        auth = data.get('auth', {})
+
+    # Add new book
     list_buku.append({
         "id_buku": len(list_buku) + 1,
         "judul": judul,
@@ -1074,17 +1048,17 @@ def submit_buku(judul, pengarang, penerbit, tahun_terbit, stok, rak):
         "rak": rak
     })
 
+    # Save all data back
     with open("data.json", "w") as file:
         json.dump({
             "auth": auth,
             "list_buku": list_buku,
-            "list_peminjaman": list_peminjaman,
+            "list_peminjaman": list_peminjaman, 
             "list_pengembalian": list_pengembalian,
             "list_anggota": list_anggota
         }, file, indent=4)
 
     messagebox.showinfo("Success", "Data Buku Berhasil Ditambahkan")
-
     show_crud_buku()
 
 def del_buku(id_buku):
@@ -1365,8 +1339,18 @@ def create_anggota():
         hover_color="#333333"
     )
     btn_back.pack(side="left", padx=20)
-    
+
 def submit_anggota(username, nama, gender, telp, alamat, email):
+    # Read current data
+    with open("data.json", "r") as file:
+        data = json.load(file)
+        list_anggota = data['list_anggota']
+        list_buku = data.get('list_buku', [])
+        list_peminjaman = data.get('list_peminjaman', [])
+        list_pengembalian = data.get('list_pengembalian', [])
+        auth = data.get('auth', {})
+
+    # Add new member
     list_anggota.append({
         "id_anggota": len(list_anggota) + 1,
         "username": username,
@@ -1377,17 +1361,17 @@ def submit_anggota(username, nama, gender, telp, alamat, email):
         "email": email
     })
 
+    # Save all data back
     with open("data.json", "w") as file:
         json.dump({
             "auth": auth,
-            "list_buku": list_buku, 
-            "list_peminjaman": list_peminjaman,
+            "list_buku": list_buku,
+            "list_peminjaman": list_peminjaman, 
             "list_pengembalian": list_pengembalian,
             "list_anggota": list_anggota
         }, file, indent=4)
 
     messagebox.showinfo("Success", "Data Anggota Berhasil Ditambahkan")
-
     show_crud_anggota()
 
 # run the app
