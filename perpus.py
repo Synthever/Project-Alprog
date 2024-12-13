@@ -664,6 +664,7 @@ def read_buku():
     )
     welcome_label.pack(pady=20)
 
+    # Create scrollable container
     frame = ScrollableLabelButtonFrame(
         container,
         width=900,
@@ -671,28 +672,58 @@ def read_buku():
         corner_radius=10,
         fg_color=("#FFFFFF", "#333333"),
         border_color="#1f538d",
-        border_width=2
+        border_width=2,
+        orientation="horizontal"  # Enable horizontal scrolling
     )
     frame.pack(expand=True, fill="both", padx=20, pady=10)
 
+    # Create inner frame for content
+    inner_frame = customtkinter.CTkFrame(frame)
+    inner_frame.pack(expand=True, fill="both")
+    inner_frame.configure(fg_color="transparent")
+
+    # Column headers
+    headers = ["ID", "Judul", "Pengarang", "Penerbit", "Tahun", "Stok", "Rak"]
+    for i, header in enumerate(headers):
+        label = customtkinter.CTkLabel(
+            inner_frame, 
+            text=header,
+            font=("Montserrat", 14, "bold"),
+            width=150
+        )
+        label.grid(row=0, column=i, padx=5, pady=5, sticky="w")
+
+    # Load and display data
     with open("data.json", "r") as file:
         data = json.load(file)
         list_buku = data['list_buku']
 
-    for buku in list_buku:
-        book_info = f"ID: {buku['id_buku']} \t| Judul: {buku['judul']} | Pengarang: {buku['pengarang']} | Penerbit: {buku['penerbit']} | Tahun: {buku['tahun_terbit']} | Stok: {buku['stock']} | Rak: {buku['rak']}"
-        frame.add_item(book_info)
+    for i, buku in enumerate(list_buku, 1):
+        # ID
+        customtkinter.CTkLabel(inner_frame, text=str(buku['id_buku']), width=50).grid(row=i, column=0, padx=55, pady=2, sticky="w")
+        # Judul
+        customtkinter.CTkLabel(inner_frame, text=buku['judul'], width=200).grid(row=i, column=1, padx=5, pady=2, sticky="w")
+        # Pengarang
+        customtkinter.CTkLabel(inner_frame, text=buku['pengarang'], width=150).grid(row=i, column=2, padx=5, pady=2, sticky="w")
+        # Penerbit
+        customtkinter.CTkLabel(inner_frame, text=buku['penerbit'], width=150).grid(row=i, column=3, padx=5, pady=2, sticky="w")
+        # Tahun
+        customtkinter.CTkLabel(inner_frame, text=str(buku['tahun_terbit']), width=100).grid(row=i, column=4, padx=35, pady=2, sticky="w")
+        # Stok
+        customtkinter.CTkLabel(inner_frame, text=str(buku['stock']), width=100).grid(row=i, column=5, padx=35, pady=2, sticky="w")
+        # Rak
+        customtkinter.CTkLabel(inner_frame, text=buku['rak'], width=100).grid(row=i, column=6, padx=35, pady=2, sticky="w")
 
+    # Back button
     btn_back = customtkinter.CTkButton(
         container,
-        text="← Kembali ke Menu Utama",
+        text="← Kembali",
         command=show_crud_buku,
-        font=("Montserrat", 14),
-        width=200,
-        height=40,
-        corner_radius=10,
-        hover_color="#1f538d",
-        fg_color="#333333"
+        width=120,
+        height=32,
+        corner_radius=8,
+        font=("montserrat", 14, "bold"),
+        hover_color="#1f538d"
     )
     btn_back.pack(pady=20)
 
