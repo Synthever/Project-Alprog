@@ -143,7 +143,12 @@
     ],
     "list_peminjaman": [
         {
-            "id": 1
+            "id_peminjaman": 1,
+            "tanggal_peminjaman": "2024-12-15",
+            "tanggal_pengembalian": "2024-12-22",
+            "id_buku": 7,
+            "id_anggota": 2,
+            "id_petugas": 1
         }
     ],
     "list_pengembalian": [

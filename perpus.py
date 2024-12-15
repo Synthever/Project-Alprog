@@ -228,108 +228,7 @@ def show_main_menu():
     )
     logout_button.pack(pady=20)
     
-# ====================================== MENU PERPUSTAKAAN ======================================
-
-# ================================= MENU PEMINJAMAN =================================
-
-def show_crud_peminjaman():
-    for widget in app.winfo_children():
-        widget.pack_forget()
-
-    # Create main container frame
-    container = customtkinter.CTkFrame(app)
-    container.pack(fill="both", expand=True, padx=40, pady=40)
-    
-    # Header section
-    header_frame = customtkinter.CTkFrame(container)
-    header_frame.pack(fill="x", pady=(20, 40))
-    header_frame.configure(fg_color="transparent")
-    
-    welcome_label = customtkinter.CTkLabel(
-        header_frame, 
-        text="Menu Kelola Peminjaman",
-        font=("Montserrat", 38, "bold"),
-        text_color="#1f538d"
-    )
-    welcome_label.pack(pady=10)
-    
-    subtitle = customtkinter.CTkLabel(
-        header_frame,
-        text="Silahkan pilih menu yang tersedia",
-        font=("Montserrat", 16),
-        text_color="#FFFFFF"
-    )
-    subtitle.pack()
-
-    # Menu buttons section
-    menu_frame = customtkinter.CTkFrame(container)
-    menu_frame.pack(pady=20)
-    menu_frame.configure(fg_color="transparent")
-
-    # Create styled buttons
-    btn_read_peminjaman = customtkinter.CTkButton(
-        menu_frame,
-        text="List Data Peminjaman",
-        font=("Montserrat", 18),
-        width=300,
-        height=60,
-        corner_radius=15,
-        hover_color="#1f538d",
-        fg_color="#2b6595"
-    )
-    btn_read_peminjaman.pack(pady=15)
-
-    btn_create_peminjaman = customtkinter.CTkButton(
-        menu_frame,
-        text="Tambah Peminjaman Baru",
-        font=("Montserrat", 18),
-        width=300,
-        height=60,
-        corner_radius=15,
-        hover_color="#1f538d",
-        fg_color="#2b6595"
-    )
-    btn_create_peminjaman.pack(pady=15)
-
-    btn_update_peminjaman = customtkinter.CTkButton(
-        menu_frame,
-        text="Ubah Data Peminjaman",
-        font=("Montserrat", 18),
-        width=300,
-        height=60,
-        corner_radius=15,
-        hover_color="#1f538d",
-        fg_color="#2b6595"
-    )
-    btn_update_peminjaman.pack(pady=15)
-
-    btn_delete_peminjaman = customtkinter.CTkButton(
-        menu_frame,
-        text="Hapus Data Peminjaman",
-        font=("Montserrat", 18),
-        width=300,
-        height=60,
-        corner_radius=15,
-        hover_color="#1f538d",
-        fg_color="#2b6595"
-    )
-    btn_delete_peminjaman.pack(pady=15)
-
-    # Back button with new style
-    btn_back = customtkinter.CTkButton(
-        container,
-        text="← Kembali ke Menu Utama",
-        command=show_main_menu,
-        font=("Montserrat", 14),
-        width=200,
-        height=40,
-        corner_radius=10,
-        hover_color="#1f538d",
-        fg_color="#333333"
-    )
-    btn_back.pack(pady=30)
-    
-# ================================= MENU PEMINJAMAN =================================
+# ================================= MENU PERPUSTAKAAN =================================
 
 # ================================= MENU PENGEMBALIAN =================================
 
@@ -1093,9 +992,373 @@ class ScrollableLabelButtonFrame(customtkinter.CTkScrollableFrame):
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! BUKU FUNCTIONS AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! PEMINJAMAN FUNCTIONS AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+# ================================= MENU PEMINJAMAN =================================
+
+def show_crud_peminjaman():
+    for widget in app.winfo_children():
+        widget.pack_forget()
+
+    # Create main container frame
+    container = customtkinter.CTkFrame(app)
+    container.pack(fill="both", expand=True, padx=40, pady=40)
+    
+    # Header section
+    header_frame = customtkinter.CTkFrame(container)
+    header_frame.pack(fill="x", pady=(20, 40))
+    header_frame.configure(fg_color="transparent")
+    
+    welcome_label = customtkinter.CTkLabel(
+        header_frame, 
+        text="Menu Kelola Peminjaman",
+        font=("Montserrat", 38, "bold"),
+        text_color="#1f538d"
+    )
+    welcome_label.pack(pady=10)
+    
+    subtitle = customtkinter.CTkLabel(
+        header_frame,
+        text="Silahkan pilih menu yang tersedia",
+        font=("Montserrat", 16),
+        text_color="#FFFFFF"
+    )
+    subtitle.pack()
+
+    # Menu buttons section
+    menu_frame = customtkinter.CTkFrame(container)
+    menu_frame.pack(pady=20)
+    menu_frame.configure(fg_color="transparent")
+
+    # Create styled buttons
+    btn_read_peminjaman = customtkinter.CTkButton(
+        menu_frame,
+        text="List Data Peminjaman",
+        font=("Montserrat", 18),
+        width=300,
+        height=60,
+        corner_radius=15,
+        hover_color="#1f538d",
+        fg_color="#2b6595"
+    )
+    btn_read_peminjaman.pack(pady=15)
+
+    btn_create_peminjaman = customtkinter.CTkButton(
+        menu_frame,
+        text="Tambah Peminjaman Baru",
+        command=create_peminjaman,
+        font=("Montserrat", 18),
+        width=300,
+        height=60,
+        corner_radius=15,
+        hover_color="#1f538d",
+        fg_color="#2b6595"
+    )
+    btn_create_peminjaman.pack(pady=15)
+
+    btn_update_peminjaman = customtkinter.CTkButton(
+        menu_frame,
+        text="Ubah Data Peminjaman",
+        font=("Montserrat", 18),
+        width=300,
+        height=60,
+        corner_radius=15,
+        hover_color="#1f538d",
+        fg_color="#2b6595"
+    )
+    btn_update_peminjaman.pack(pady=15)
+
+    btn_delete_peminjaman = customtkinter.CTkButton(
+        menu_frame,
+        text="Hapus Data Peminjaman",
+        font=("Montserrat", 18),
+        width=300,
+        height=60,
+        corner_radius=15,
+        hover_color="#1f538d",
+        fg_color="#2b6595"
+    )
+    btn_delete_peminjaman.pack(pady=15)
+
+    # Back button with new style
+    btn_back = customtkinter.CTkButton(
+        container,
+        text="← Kembali ke Menu Utama",
+        command=show_main_menu,
+        font=("Montserrat", 14),
+        width=200,
+        height=40,
+        corner_radius=10,
+        hover_color="#1f538d",
+        fg_color="#333333"
+    )
+    btn_back.pack(pady=30)
+    
+# ================================= MENU PEMINJAMAN =======================================
+
+# ================================= READ PEMINJAMAN FUNCTIONS =============================
+
+def read_peminjaman():
+    print("Read Peminjaman")
+
+# ================================= READ PEMINJAMAN FUNCTIONS =============================
+
+# ================================= CREATE PEMINJAMAN FUNCTIONS ===========================
+
+def create_peminjaman():
+    # Get current logged in user
+    with open("data.json", "r") as file:
+        data = json.load(file)
+        current_user = data['auth']['username']
+        id_petugas = data['auth']['id_user']
+    
+    for widget in app.winfo_children():
+        widget.pack_forget()
+
+    # Create main scrollable container that fills the entire window
+    main_frame = customtkinter.CTkFrame(app)
+    main_frame.pack(fill="both", expand=True, padx=0, pady=0)
+    
+    # Create canvas and scrollbar with full width
+    canvas = customtkinter.CTkCanvas(main_frame, bg='#2b2b2b', highlightthickness=0)
+    scrollbar = customtkinter.CTkScrollbar(main_frame, orientation="vertical", command=canvas.yview)
+    scrollable_frame = customtkinter.CTkFrame(canvas, fg_color=("#DBDBDB", "#2b2b2b"))
+
+    # Configure canvas
+    canvas.configure(yscrollcommand=scrollbar.set)
+    
+    # Bind mouse wheel
+    def _on_mousewheel(event):
+        canvas.yview_scroll(int(-1*(event.delta/120)), "units")
+    canvas.bind_all("<MouseWheel>", _on_mousewheel)
+    
+    # Update scroll region when frame changes
+    def configure_scroll_region(event):
+        canvas.configure(scrollregion=canvas.bbox("all"))
+    scrollable_frame.bind("<Configure>", configure_scroll_region)
+    
+    # Create window that fills canvas width
+    canvas_window = canvas.create_window((0, 0), window=scrollable_frame, anchor="nw", width=canvas.winfo_width())
+    
+    # Update canvas window width when canvas is resized
+    def configure_window_width(event):
+        canvas.itemconfig(canvas_window, width=event.width)
+    canvas.bind("<Configure>", configure_window_width)
+
+    # Create container inside scrollable frame with proper padding
+    container = customtkinter.CTkFrame(scrollable_frame)
+    container.pack(fill="both", expand=True, padx=40, pady=40)
+
+    # Pack canvas and scrollbar to fill window
+    canvas.pack(side="left", fill="both", expand=True)
+    scrollbar.pack(side="right", fill="y")
+
+    # Header
+    welcome_label = customtkinter.CTkLabel(
+        container, 
+        text="Tambah Data Peminjaman",  
+        font=("Montserrat", 32, "bold"),
+        text_color="#1f538d"
+    )
+    welcome_label.pack(pady=(20, 30))
+
+    # Form container
+    form_frame = customtkinter.CTkFrame(container)
+    form_frame.pack(fill="x", padx=20)
+    form_frame.grid_columnconfigure((0,1), weight=1)
+
+    # Tanggal Peminjaman
+    label_tgl = customtkinter.CTkLabel(form_frame, text="Tanggal Peminjaman:", font=("Montserrat", 14))
+    label_tgl.grid(row=0, column=0, padx=10, pady=(5,0), sticky="w")
+    
+    # Create date picker frame
+    date_frame = customtkinter.CTkFrame(form_frame)
+    date_frame.grid(row=1, column=0, padx=10, pady=(0,15), sticky="w")
+    
+    # Day dropdown
+    day_var = customtkinter.StringVar()
+    days = [str(i).zfill(2) for i in range(1, 32)]
+    day_dropdown = customtkinter.CTkOptionMenu(date_frame, variable=day_var, values=days, width=60)
+    day_dropdown.pack(side="left", padx=5)
+    
+    # Month dropdown
+    month_var = customtkinter.StringVar()
+    months = [str(i).zfill(2) for i in range(1, 13)]
+    month_dropdown = customtkinter.CTkOptionMenu(date_frame, variable=month_var, values=months, width=60)
+    month_dropdown.pack(side="left", padx=5)
+    
+    # Year dropdown
+    year_var = customtkinter.StringVar()
+    import datetime
+    current_year = datetime.datetime.now().year
+    years = [str(i) for i in range(current_year, current_year + 5)]
+    year_dropdown = customtkinter.CTkOptionMenu(date_frame, variable=year_var, values=years, width=80)
+    year_dropdown.pack(side="left", padx=5)
+
+    # Set default date to today
+    today = datetime.datetime.now()
+    day_var.set(today.strftime("%d"))
+    month_var.set(today.strftime("%m"))
+    year_var.set(str(today.year))
+
+    # Buku Search Frame
+    buku_frame = customtkinter.CTkFrame(form_frame)
+    buku_frame.grid(row=2, column=0, columnspan=2, padx=10, pady=(20,15), sticky="ew")
+    
+    label_buku = customtkinter.CTkLabel(buku_frame, text="Cari Buku:", font=("Montserrat", 14))
+    label_buku.pack(pady=(10,5))
+    
+    search_buku_var = customtkinter.StringVar()
+    search_buku_entry = customtkinter.CTkEntry(
+        buku_frame, 
+        placeholder_text="Masukkan judul buku",
+        width=300,
+        textvariable=search_buku_var
+    )
+    search_buku_entry.pack(pady=5)
+    
+    buku_list_frame = customtkinter.CTkScrollableFrame(buku_frame, height=150)
+    buku_list_frame.pack(fill="x", padx=10, pady=10)
+    
+    selected_buku_var = customtkinter.StringVar()
+    
+    def search_buku(*args):
+        # Clear previous results
+        for widget in buku_list_frame.winfo_children():
+            widget.destroy()
+            
+        search_term = search_buku_var.get().lower()
+        for buku in data['list_buku']:
+            if search_term in buku['judul'].lower():
+                btn = customtkinter.CTkRadioButton(
+                    buku_list_frame,
+                    text=f"{buku['judul']} (ID: {buku['id_buku']})",
+                    variable=selected_buku_var,
+                    value=str(buku['id_buku'])
+                )
+                btn.pack(pady=2, anchor="w")
+    
+    search_buku_var.trace('w', search_buku)
+    search_buku()  # Initial population
+    
+    # Anggota Search Frame
+    anggota_frame = customtkinter.CTkFrame(form_frame)
+    anggota_frame.grid(row=3, column=0, columnspan=2, padx=10, pady=(20,15), sticky="ew")
+    
+    label_anggota = customtkinter.CTkLabel(anggota_frame, text="Cari Anggota:", font=("Montserrat", 14))
+    label_anggota.pack(pady=(10,5))
+    
+    search_anggota_var = customtkinter.StringVar()
+    search_anggota_entry = customtkinter.CTkEntry(
+        anggota_frame, 
+        placeholder_text="Masukkan nama anggota",
+        width=300,
+        textvariable=search_anggota_var
+    )
+    search_anggota_entry.pack(pady=5)
+    
+    anggota_list_frame = customtkinter.CTkScrollableFrame(anggota_frame, height=150)
+    anggota_list_frame.pack(fill="x", padx=10, pady=10)
+    
+    selected_anggota_var = customtkinter.StringVar()
+    
+    def search_anggota(*args):
+        # Clear previous results
+        for widget in anggota_list_frame.winfo_children():
+            widget.destroy()
+            
+        search_term = search_anggota_var.get().lower()
+        for anggota in data['list_anggota']:
+            if search_term in anggota['nama'].lower():
+                btn = customtkinter.CTkRadioButton(
+                    anggota_list_frame,
+                    text=f"{anggota['nama']} (ID: {anggota['id_anggota']})",
+                    variable=selected_anggota_var,
+                    value=str(anggota['id_anggota'])
+                )
+                btn.pack(pady=2, anchor="w")
+    
+    search_anggota_var.trace('w', search_anggota)
+    search_anggota()  # Initial population
+
+    # Buttons container
+    button_frame = customtkinter.CTkFrame(container)
+    button_frame.pack(fill="x", pady=30)
+    button_frame.configure(fg_color="transparent")
+
+    def validate_and_save():
+        try:
+            # Get selected date
+            selected_date = f"{year_var.get()}-{month_var.get()}-{day_var.get()}"
+            tgl_pinjam = datetime.datetime.strptime(selected_date, "%Y-%m-%d")
+            
+            # Calculate return date (7 days from borrow date)
+            tgl_kembali = tgl_pinjam + datetime.timedelta(days=7)
+            
+            # Validate selections
+            if not selected_buku_var.get() or not selected_anggota_var.get():
+                messagebox.showerror("Error", "Pilih buku dan anggota terlebih dahulu!")
+                return
+                
+            # Format dates for JSON
+            tgl_pinjam_str = tgl_pinjam.strftime("%Y-%m-%d")
+            tgl_kembali_str = tgl_kembali.strftime("%Y-%m-%d")
+            
+            # Prepare new peminjaman data
+            new_peminjaman = {
+                "id_peminjaman": len(data['list_peminjaman']) + 1,
+                "tanggal_peminjaman": tgl_pinjam_str,
+                "tanggal_pengembalian": tgl_kembali_str,
+                "id_buku": int(selected_buku_var.get()),
+                "id_anggota": int(selected_anggota_var.get()),
+                "id_petugas": id_petugas
+            }
+            
+            # Update data
+            data['list_peminjaman'].append(new_peminjaman)
+            
+            # Save to file
+            with open("data.json", "w") as file:
+                json.dump(data, file, indent=4)
+                
+            messagebox.showinfo("Sukses", "Data peminjaman berhasil ditambahkan!")
+            show_crud_peminjaman()
+            
+        except Exception as e:
+            messagebox.showerror("Error", f"Terjadi kesalahan: {str(e)}")
+
+    btn_submit = customtkinter.CTkButton(
+        button_frame,
+        text="Submit",
+        command=validate_and_save,
+        width=200,
+        height=40,
+        corner_radius=8,
+        font=("Montserrat", 14, "bold"),
+        hover_color="#1f538d"
+    )
+    btn_submit.pack(side="right", padx=20)
+
+    btn_back = customtkinter.CTkButton(
+        button_frame,
+        text="← Kembali",
+        command=show_crud_peminjaman,
+        width=200,
+        height=40,
+        corner_radius=8,
+        font=("Montserrat", 14, "bold"),
+        fg_color="#666666",
+        hover_color="#333333"
+    )
+    btn_back.pack(side="left", padx=20)
+
+# ================================= CREATE PEMINJAMAN FUNCTIONS ===========================
+
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! PEMINJAMAN FUNCTIONS AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ANGGOTA FUNCTIONS AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-# ================================= MENU ANGGOTA =================================
+# ================================= MENU ANGGOTA ==========================================
 
 def show_crud_anggota():
     for widget in app.winfo_children():
