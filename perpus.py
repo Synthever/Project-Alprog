@@ -432,109 +432,6 @@ def show_crud_pengembalian():
     
 # ================================= MENU PENGEMBALIAN =================================
 
-# ================================= MENU ANGGOTA =================================
-
-def show_crud_anggota():
-    for widget in app.winfo_children():
-        widget.pack_forget()
-
-    # Create main container frame
-    container = customtkinter.CTkFrame(app)
-    container.pack(fill="both", expand=True, padx=40, pady=40)
-    
-    # Header section
-    header_frame = customtkinter.CTkFrame(container)
-    header_frame.pack(fill="x", pady=(20, 40))
-    header_frame.configure(fg_color="transparent")
-    
-    welcome_label = customtkinter.CTkLabel(
-        header_frame, 
-        text="Menu Kelola Pengembalian",
-        font=("Montserrat", 38, "bold"),
-        text_color="#1f538d"
-    )
-    welcome_label.pack(pady=10)
-    
-    subtitle = customtkinter.CTkLabel(
-        header_frame,
-        text="Silahkan pilih menu yang tersedia",
-        font=("Montserrat", 16),
-        text_color="#FFFFFF"
-    )
-    subtitle.pack()
-
-    # Menu buttons section
-    menu_frame = customtkinter.CTkFrame(container)
-    menu_frame.pack(pady=20)
-    menu_frame.configure(fg_color="transparent")
-
-    # Create styled buttons
-    btn_read_anggota = customtkinter.CTkButton(
-        menu_frame,
-        text="List Data Anggota",
-        command=read_anggota,
-        font=("Montserrat", 18),
-        width=300,
-        height=60,
-        corner_radius=15,
-        hover_color="#1f538d",
-        fg_color="#2b6595"
-    )
-    btn_read_anggota.pack(pady=15)
-
-    btn_create_anggota = customtkinter.CTkButton(
-        menu_frame,
-        text="Tambah Anggota Baru",
-        command=create_anggota,
-        font=("Montserrat", 18),
-        width=300,
-        height=60,
-        corner_radius=15,
-        hover_color="#1f538d",
-        fg_color="#2b6595"
-    )
-    btn_create_anggota.pack(pady=15)
-    
-    btn_update_anggota = customtkinter.CTkButton(
-        menu_frame,
-        text="Ubah Data Anggota",
-        font=("Montserrat", 18),
-        width=300,
-        height=60,
-        corner_radius=15,
-        hover_color="#1f538d",
-        fg_color="#2b6595"
-    )
-    btn_update_anggota.pack(pady=15)
-    
-    btn_delete_anggota = customtkinter.CTkButton(
-        menu_frame,
-        text="Hapus Data Anggota",
-        font=("Montserrat", 18),
-        width=300,
-        height=60,
-        corner_radius=15,
-        hover_color="#1f538d",
-        fg_color="#2b6595"
-    )
-    btn_delete_anggota.pack(pady=15)
-
-    # Back button with new style
-    btn_back = customtkinter.CTkButton(
-        container,
-        text="← Kembali ke Menu Utama",
-        command=show_main_menu,
-        font=("Montserrat", 14),
-        width=200,
-        height=40,
-        corner_radius=10,
-        hover_color="#1f538d",
-        fg_color="#333333"
-    )
-    btn_back.pack(pady=30)
-    
-# ================================= MENU PEMINJAMAN =====================================
-
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! BUKU FUNCTIONS AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 # ====================================== MENU BUKU ======================================
@@ -1198,6 +1095,111 @@ class ScrollableLabelButtonFrame(customtkinter.CTkScrollableFrame):
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ANGGOTA FUNCTIONS AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+# ================================= MENU ANGGOTA =================================
+
+def show_crud_anggota():
+    for widget in app.winfo_children():
+        widget.pack_forget()
+
+    # Create main container frame
+    container = customtkinter.CTkFrame(app)
+    container.pack(fill="both", expand=True, padx=40, pady=40)
+    
+    # Header section
+    header_frame = customtkinter.CTkFrame(container)
+    header_frame.pack(fill="x", pady=(20, 40))
+    header_frame.configure(fg_color="transparent")
+    
+    welcome_label = customtkinter.CTkLabel(
+        header_frame, 
+        text="Menu Kelola Pengembalian",
+        font=("Montserrat", 38, "bold"),
+        text_color="#1f538d"
+    )
+    welcome_label.pack(pady=10)
+    
+    subtitle = customtkinter.CTkLabel(
+        header_frame,
+        text="Silahkan pilih menu yang tersedia",
+        font=("Montserrat", 16),
+        text_color="#FFFFFF"
+    )
+    subtitle.pack()
+
+    # Menu buttons section
+    menu_frame = customtkinter.CTkFrame(container)
+    menu_frame.pack(pady=20)
+    menu_frame.configure(fg_color="transparent")
+
+    # Create styled buttons
+    btn_read_anggota = customtkinter.CTkButton(
+        menu_frame,
+        text="List Data Anggota",
+        command=read_anggota,
+        font=("Montserrat", 18),
+        width=300,
+        height=60,
+        corner_radius=15,
+        hover_color="#1f538d",
+        fg_color="#2b6595"
+    )
+    btn_read_anggota.pack(pady=15)
+
+    btn_create_anggota = customtkinter.CTkButton(
+        menu_frame,
+        text="Tambah Anggota Baru",
+        command=create_anggota,
+        font=("Montserrat", 18),
+        width=300,
+        height=60,
+        corner_radius=15,
+        hover_color="#1f538d",
+        fg_color="#2b6595"
+    )
+    btn_create_anggota.pack(pady=15)
+    
+    btn_update_anggota = customtkinter.CTkButton(
+        menu_frame,
+        text="Ubah Data Anggota",
+        command=update_anggota,
+        font=("Montserrat", 18),
+        width=300,
+        height=60,
+        corner_radius=15,
+        hover_color="#1f538d",
+        fg_color="#2b6595"
+    )
+    btn_update_anggota.pack(pady=15)
+    
+    btn_delete_anggota = customtkinter.CTkButton(
+        menu_frame,
+        text="Hapus Data Anggota",
+        command=delete_anggota,
+        font=("Montserrat", 18),
+        width=300,
+        height=60,
+        corner_radius=15,
+        hover_color="#1f538d",
+        fg_color="#2b6595"
+    )
+    btn_delete_anggota.pack(pady=15)
+
+    # Back button with new style
+    btn_back = customtkinter.CTkButton(
+        container,
+        text="← Kembali ke Menu Utama",
+        command=show_main_menu,
+        font=("Montserrat", 14),
+        width=200,
+        height=40,
+        corner_radius=10,
+        hover_color="#1f538d",
+        fg_color="#333333"
+    )
+    btn_back.pack(pady=30)
+    
+# ================================= MENU ANGGOTA =====================================
+
 # ================================= READ ANGGOTA FUNCTIONS ================================
 
 def read_anggota():
@@ -1298,7 +1300,7 @@ def create_anggota():
     # Header
     welcome_label = customtkinter.CTkLabel(
         container, 
-        text="Tambahkan Data Anggota",  
+        text="Tambahkan Data Anggota",
         font=("Montserrat", 32, "bold"),
         text_color="#1f538d"
     )
@@ -1461,6 +1463,351 @@ def submit_anggota(username, nama, gender, telp, alamat, email):
     show_crud_anggota()
     
 # ================================= CREATE ANGGOTA FUNCTIONS ==============================
+
+# ================================= UPDATE ANGGOTA FUNCTIONS ==============================
+
+def update_anggota():
+    for widget in app.winfo_children():
+        widget.pack_forget()
+
+    # Create main container
+    container = customtkinter.CTkFrame(app)
+    container.pack(fill="both", expand=True, padx=40, pady=40)
+    
+    # Header
+    welcome_label = customtkinter.CTkLabel(
+        container, 
+        text="Ubah Data Anggota",  
+        font=("Montserrat", 32, "bold"),
+        text_color="#1f538d"
+    )
+    welcome_label.pack(pady=(20, 30))
+    
+    # Form container
+    form_frame = customtkinter.CTkFrame(container)
+    form_frame.pack(fill="x", padx=20)
+    form_frame.grid_columnconfigure((0,1), weight=1)
+    
+    # ID Input
+    label_id = customtkinter.CTkLabel(
+        form_frame,
+        text="Masukkan ID Anggota yang akan diubah:",
+        font=("Montserrat", 16)
+    )
+    label_id.grid(row=0, column=0, padx=10, pady=(0,10), sticky="w")
+    
+    entry_id = customtkinter.CTkEntry(
+        form_frame,
+        placeholder_text="ID Anggota",
+        width=300,
+        height=40,
+        font=("Montserrat", 14)
+    )
+    entry_id.grid(row=1, column=0, padx=10, pady=(0,20))
+    
+    btn_submit = customtkinter.CTkButton(
+        form_frame,
+        text="Submit",
+        command=lambda: form_update_anggota(entry_id.get()),
+        width=200,
+        height=40,
+        corner_radius=8,
+        font=("Montserrat", 14, "bold"),
+        hover_color="#FFA726",
+        fg_color="#FF9500"
+    )
+    btn_submit.grid(row=1, column=1, padx=10, pady=(0,20), sticky="ew")
+    
+    # Back button
+    btn_back = customtkinter.CTkButton(
+        container,
+        text="← Kembali ke Menu Utama",
+        command=show_crud_anggota,
+        font=("Montserrat", 14),
+        width=200,
+        height=40,
+        corner_radius=10,
+        hover_color="#1f538d",
+        fg_color="#333333"
+    )
+    btn_back.pack(pady=30)
+
+def form_update_anggota(id_anggota):
+    try:
+        id_anggota = int(id_anggota)
+        with open("data.json", "r") as file:
+            data = json.load(file)
+            list_anggota = data["list_anggota"]
+            
+        if id_anggota < 1 or id_anggota > len(list_anggota):
+            messagebox.showerror("Error", "ID Anggota tidak ditemukan!")
+            return
+            
+        anggota = list_anggota[id_anggota-1]
+        
+        for widget in app.winfo_children():
+            widget.pack_forget()
+            
+        # Create main container
+        container = customtkinter.CTkFrame(app)
+        container.pack(fill="both", expand=True, padx=40, pady=40)
+        
+        # Header
+        header_label = customtkinter.CTkLabel(
+            container,
+            text=f"Update Anggota ID: {id_anggota}",
+            font=("Montserrat", 32, "bold"),
+            text_color="#1f538d"
+        )
+        header_label.pack(pady=(20, 30))
+
+        # Form container
+        form_frame = customtkinter.CTkFrame(container)
+        form_frame.pack(fill="x", padx=20)
+        form_frame.grid_columnconfigure((0,1), weight=1)
+
+        # Form fields
+        # Username
+        label_username = customtkinter.CTkLabel(form_frame, text="Username:", font=("Montserrat", 14))
+        label_username.grid(row=0, column=0, padx=10, pady=(5,0), sticky="w")
+        entry_username = customtkinter.CTkEntry(form_frame, width=250)
+        entry_username.insert(0, anggota["username"])
+        entry_username.grid(row=1, column=0, padx=10, pady=(0,15))
+
+        # Nama
+        label_nama = customtkinter.CTkLabel(form_frame, text="Nama:", font=("Montserrat", 14))
+        label_nama.grid(row=0, column=1, padx=10, pady=(5,0), sticky="w")
+        entry_nama = customtkinter.CTkEntry(form_frame, width=250)
+        entry_nama.insert(0, anggota["nama"])
+        entry_nama.grid(row=1, column=1, padx=10, pady=(0,15))
+
+        # Gender
+        label_gender = customtkinter.CTkLabel(form_frame, text="Gender:", font=("Montserrat", 14))
+        label_gender.grid(row=2, column=0, padx=10, pady=(5,0), sticky="w")
+        
+        gender_var = customtkinter.StringVar(value=anggota["gender"])
+        gender_frame = customtkinter.CTkFrame(form_frame)
+        gender_frame.grid(row=3, column=0, padx=10, pady=(0,15), sticky="w")
+        gender_frame.configure(fg_color="transparent")
+        
+        radio_laki = customtkinter.CTkRadioButton(
+            gender_frame,
+            text="Laki-laki",
+            variable=gender_var,
+            value="Laki-laki",
+            font=("Montserrat", 12)
+        )
+        radio_laki.pack(side="left", padx=(0,20))
+        
+        radio_perempuan = customtkinter.CTkRadioButton(
+            gender_frame,
+            text="Perempuan",
+            variable=gender_var,
+            value="Perempuan",
+            font=("Montserrat", 12)
+        )
+        radio_perempuan.pack(side="left")
+
+        # Telepon
+        label_telp = customtkinter.CTkLabel(form_frame, text="Telepon:", font=("Montserrat", 14))
+        label_telp.grid(row=2, column=1, padx=10, pady=(5,0), sticky="w")
+        entry_telp = customtkinter.CTkEntry(form_frame, width=250)
+        entry_telp.insert(0, anggota["telp"])
+        entry_telp.grid(row=3, column=1, padx=10, pady=(0,15))
+
+        # Alamat
+        label_alamat = customtkinter.CTkLabel(form_frame, text="Alamat:", font=("Montserrat", 14))
+        label_alamat.grid(row=4, column=0, padx=10, pady=(5,0), sticky="w")
+        entry_alamat = customtkinter.CTkEntry(form_frame, width=250)
+        entry_alamat.insert(0, anggota["alamat"])
+        entry_alamat.grid(row=5, column=0, padx=10, pady=(0,15))
+
+        # Email
+        label_email = customtkinter.CTkLabel(form_frame, text="Email:", font=("Montserrat", 14))
+        label_email.grid(row=4, column=1, padx=10, pady=(5,0), sticky="w")
+        entry_email = customtkinter.CTkEntry(form_frame, width=250)
+        entry_email.insert(0, anggota["email"])
+        entry_email.grid(row=5, column=1, padx=10, pady=(0,15))
+
+        # Button container
+        button_frame = customtkinter.CTkFrame(container)
+        button_frame.pack(fill="x", pady=20)
+        button_frame.configure(fg_color="transparent")
+
+        def save_changes():
+            try:
+                # Validate fields
+                if not all([entry_username.get(), entry_nama.get(), entry_telp.get(),
+                           entry_alamat.get(), entry_email.get()]):
+                    messagebox.showerror("Error", "Semua field harus diisi!")
+                    return
+
+                # Validate phone number
+                if not entry_telp.get().isdigit():
+                    messagebox.showerror("Error", "Nomor telepon harus berupa angka!")
+                    return
+
+                # Validate email format
+                if '@' not in entry_email.get() or '.' not in entry_email.get():
+                    messagebox.showerror("Error", "Format email tidak valid!")
+                    return
+
+                if messagebox.askyesno("Konfirmasi", "Apakah anda yakin ingin mengubah data anggota ini?"):
+                    # Update member data
+                    list_anggota[id_anggota-1].update({
+                        "username": entry_username.get(),
+                        "nama": entry_nama.get(),
+                        "gender": gender_var.get(),
+                        "telp": entry_telp.get(),
+                        "alamat": entry_alamat.get(),
+                        "email": entry_email.get()
+                    })
+                    
+                    # Save to file
+                    with open("data.json", "w") as file:
+                        json.dump(data, file, indent=4)
+                    
+                    messagebox.showinfo("Sukses", "Data anggota berhasil diperbarui!")
+                    show_crud_anggota()
+                    
+            except ValueError:
+                messagebox.showerror("Error", "Terjadi kesalahan saat memproses data!")
+
+        btn_save = customtkinter.CTkButton(
+            button_frame,
+            text="Simpan Perubahan",
+            command=save_changes,
+            width=200,
+            height=40,
+            corner_radius=8,
+            font=("Montserrat", 14, "bold"),
+            fg_color="#FF9500",
+            hover_color="#FFA726"
+        )
+        btn_save.pack(side="right", padx=20)
+
+        btn_back = customtkinter.CTkButton(
+            button_frame,
+            text="← Kembali",
+            command=update_anggota,
+            width=200,
+            height=40,
+            corner_radius=8,
+            font=("Montserrat", 14, "bold"),
+            fg_color="#666666",
+            hover_color="#333333"
+        )
+        btn_back.pack(side="left", padx=20)
+        
+    except ValueError:
+        messagebox.showerror("Error", "ID Anggota harus berupa angka!")
+
+# ================================= UPDATE ANGGOTA FUNCTIONS ==============================
+
+# ================================= DELETE ANGGOTA FUNCTIONS ==============================
+
+def delete_anggota():
+    for widget in app.winfo_children():
+        widget.pack_forget()
+
+    # Create main container
+    container = customtkinter.CTkFrame(app)
+    container.pack(fill="both", expand=True, padx=40, pady=40)
+    
+    # Header
+    welcome_label = customtkinter.CTkLabel(
+        container, 
+        text="Hapus Data Anggota",  
+        font=("Montserrat", 32, "bold"),
+        text_color="#1f538d"
+    )
+    welcome_label.pack(pady=(20, 30))
+    
+    # Form container
+    form_frame = customtkinter.CTkFrame(container)
+    form_frame.pack(fill="x", padx=20)
+    form_frame.grid_columnconfigure((0,1), weight=1)
+    
+    # ID Input
+    label_id = customtkinter.CTkLabel(
+        form_frame,
+        text="Masukkan ID Anggota yang akan dihapus:",
+        font=("Montserrat", 16)
+    )
+    label_id.grid(row=0, column=0, padx=10, pady=(0,10), sticky="w")
+    
+    entry_id = customtkinter.CTkEntry(
+        form_frame,
+        placeholder_text="ID Anggota",
+        width=300,
+        height=40,
+        font=("Montserrat", 14)
+    )
+    entry_id.grid(row=1, column=0, padx=10, pady=(0,20))
+    
+    btn_submit = customtkinter.CTkButton(
+        form_frame,
+        text="Submit",
+        command=lambda: del_anggota(entry_id.get()),
+        width=200,
+        height=40,
+        corner_radius=8,
+        font=("Montserrat", 14, "bold"),
+        hover_color="#c42b2b",
+        fg_color="#d64242"
+    )
+    btn_submit.grid(row=1, column=1, padx=10, pady=(0,20), sticky="ew")
+    
+    # Back button
+    btn_back = customtkinter.CTkButton(
+        container,
+        text="← Kembali ke Menu Utama",
+        command=show_crud_anggota,
+        font=("Montserrat", 14),
+        width=200,
+        height=40,
+        corner_radius=10,
+        hover_color="#1f538d",
+        fg_color="#333333"
+    )
+    btn_back.pack(pady=30)
+
+def del_anggota(id_anggota):
+    try:
+        id_anggota = int(id_anggota)
+        with open("data.json", "r") as file:
+            data = json.load(file)
+            list_anggota = data["list_anggota"]
+            list_buku = data.get('list_buku', [])
+            list_peminjaman = data.get('list_peminjaman', [])
+            list_pengembalian = data.get('list_pengembalian', [])
+            auth = data.get('auth', {})
+            
+        if id_anggota < 1 or id_anggota > len(list_anggota):
+            messagebox.showerror("Error", "ID Anggota tidak ditemukan!")
+            return
+            
+        if messagebox.askyesno("Konfirmasi", "Apakah anda yakin ingin menghapus data anggota ini?"):
+            # Delete the member
+            list_anggota.pop(id_anggota - 1)
+            
+            # Save all data back
+            with open("data.json", "w") as file:
+                json.dump({
+                    "auth": auth,
+                    "list_buku": list_buku,
+                    "list_peminjaman": list_peminjaman,
+                    "list_pengembalian": list_pengembalian,
+                    "list_anggota": list_anggota
+                }, file, indent=4)
+                
+            messagebox.showinfo("Sukses", "Data anggota berhasil dihapus!")
+            show_crud_anggota()
+            
+    except ValueError:
+        messagebox.showerror("Error", "ID Anggota harus berupa angka!")
+
+# ================================= DELETE ANGGOTA FUNCTIONS ==============================
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ANGGOTA AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
