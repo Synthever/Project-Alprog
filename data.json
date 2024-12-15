@@ -149,6 +149,22 @@
             "id_buku": 7,
             "id_anggota": 2,
             "id_petugas": 1
+        },
+        {
+            "id_peminjaman": 2,
+            "tanggal_peminjaman": "2024-12-15",
+            "tanggal_pengembalian": "2024-12-22",
+            "id_buku": 2,
+            "id_anggota": 2,
+            "id_petugas": 1
+        },
+        {
+            "id_peminjaman": 3,
+            "tanggal_peminjaman": "2024-12-15",
+            "tanggal_pengembalian": "2024-12-22",
+            "id_buku": 6,
+            "id_anggota": 2,
+            "id_petugas": 1
         }
     ],
     "list_pengembalian": [

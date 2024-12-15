@@ -2077,7 +2077,7 @@ def del_anggota(id_anggota):
 # ================================= MAIN MENU FUNCTIONS ===================================
 
 # run the app
-show_main_menu()
+auth()
 app.mainloop()
 
 # ================================= MAIN MENU FUNCTIONS ===================================
