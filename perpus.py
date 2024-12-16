@@ -468,15 +468,12 @@ def read_buku():
         corner_radius=10,
         fg_color=("#FFFFFF", "#333333"),
         border_color="#1f538d",
-        border_width=2,
-        orientation="horizontal"  # Enable horizontal scrolling
+        border_width=2
     )
     frame.pack(expand=True, fill="both", padx=20, pady=10)
 
     # Create inner frame for content
-    inner_frame = customtkinter.CTkFrame(frame)
-    inner_frame.pack(expand=True, fill="both")
-    inner_frame.configure(fg_color="transparent")
+    inner_frame = frame.scrollable_frame
 
     # Column headers
     headers = ["ID", "Judul", "Pengarang", "Penerbit", "Tahun", "Stok", "Rak"]
@@ -977,17 +974,35 @@ def del_buku(id_buku):
 class ScrollableLabelButtonFrame(customtkinter.CTkScrollableFrame):
     def __init__(self, master, command=None, **kwargs):
         super().__init__(master, **kwargs)
-        self.grid_columnconfigure(0, weight=1)
 
-        self.command = command
-        self.radiobutton_variable = customtkinter.StringVar()
-        self.label_list = []
+        # Create canvas for horizontal scrolling
+        self.canvas = customtkinter.CTkCanvas(self, bg='#2b2b2b', highlightthickness=0)
+        self.canvas.pack(side="left", fill="both", expand=True)
+        
+        # Add horizontal scrollbar
+        self.h_scrollbar = customtkinter.CTkScrollbar(self, orientation="horizontal", command=self.canvas.xview)
+        self.h_scrollbar.pack(side="bottom", fill="x")
+        
+        # Create frame inside canvas
+        self.scrollable_frame = customtkinter.CTkFrame(self.canvas)
+        self.scrollable_frame.pack(expand=True, fill="both")
+        self.scrollable_frame.configure(fg_color="transparent")
+        
+        # Configure canvas
+        self.canvas.configure(xscrollcommand=self.h_scrollbar.set)
+        self.canvas_window = self.canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
+        
+        # Bind events
+        self.scrollable_frame.bind("<Configure>", self.on_frame_configure)
+        self.canvas.bind("<Configure>", self.on_canvas_configure)
+        
+    def on_frame_configure(self, event=None):
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+        
+    def on_canvas_configure(self, event):
+        # Update the width of the canvas window when canvas is resized
+        self.canvas.itemconfig(self.canvas_window, width=event.width)
 
-    def add_item(self, item, image=None):
-        label = customtkinter.CTkLabel(self, text=item, image=image, compound="center", padx=5, anchor="w")
-        label.grid(row=len(self.label_list), column=0, pady=(0, 10), sticky="w")
-        self.label_list.append(label)
-    
 # ================================= DELETE BUKU FUNCTIONS =================================
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! BUKU FUNCTIONS AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -1034,6 +1049,7 @@ def show_crud_peminjaman():
     btn_read_peminjaman = customtkinter.CTkButton(
         menu_frame,
         text="List Data Peminjaman",
+        command=read_peminjaman,
         font=("Montserrat", 18),
         width=300,
         height=60,
@@ -1099,7 +1115,94 @@ def show_crud_peminjaman():
 # ================================= READ PEMINJAMAN FUNCTIONS =============================
 
 def read_peminjaman():
-    print("Read Peminjaman")
+    for widget in app.winfo_children():
+        widget.pack_forget()
+
+    # Create main container frame
+    container = customtkinter.CTkFrame(app)
+    container.pack(fill="both", expand=True, padx=20, pady=20)
+
+    # Stylish header
+    header_frame = customtkinter.CTkFrame(container)
+    header_frame.pack(fill="x", pady=(0, 20))
+    
+    welcome_label = customtkinter.CTkLabel(
+        header_frame, 
+        text="List Data Peminjaman",  
+        font=("montserrat", 32, "bold"),
+        text_color="#1f538d"
+    )
+    welcome_label.pack(pady=20)
+
+    # Create scrollable container
+    frame = ScrollableLabelButtonFrame(
+        container,
+        width=900,
+        height=400,
+        corner_radius=10,
+        fg_color=("#FFFFFF", "#333333"),
+        border_color="#1f538d",
+        border_width=2
+    )
+    frame.pack(expand=True, fill="both", padx=20, pady=10)
+
+    # Create inner frame for content
+    inner_frame = frame.scrollable_frame
+
+    # Column headers
+    headers = ["ID", "Tanggal Pinjam", "Tanggal Kembali", "Judul Buku", "Nama Peminjam", "Nama Petugas"]
+    for i, header in enumerate(headers):
+        label = customtkinter.CTkLabel(
+            inner_frame, 
+            text=header,
+            font=("Montserrat", 14, "bold"),
+            width=150
+        )
+        label.grid(row=0, column=i, padx=5, pady=5, sticky="w")
+
+    # Load and display data
+    with open("data.json", "r") as file:
+        data = json.load(file)
+        list_peminjaman = data['list_peminjaman']
+        list_buku = data['list_buku']
+        list_anggota = data['list_anggota']
+        auth = data['auth']
+
+    for i, pinjam in enumerate(list_peminjaman, 1):
+        # Get related data
+        buku = next((b for b in list_buku if b['id_buku'] == pinjam['id_buku']), None)
+        anggota = next((a for a in list_anggota if a['id_anggota'] == pinjam['id_anggota']), None)
+        
+        # Safely get names or show "Not Found"
+        judul_buku = buku['judul'] if buku else "Buku tidak ditemukan"
+        nama_anggota = anggota['nama'] if anggota else "Anggota tidak ditemukan"
+        nama_petugas = "Admin" if pinjam['id_petugas'] == auth['id_user'] else "Petugas tidak ditemukan"
+
+        # ID
+        customtkinter.CTkLabel(inner_frame, text=str(pinjam['id_peminjaman']), width=50).grid(row=i, column=0, padx=55, pady=2, sticky="w")
+        # Tanggal Pinjam
+        customtkinter.CTkLabel(inner_frame, text=pinjam['tanggal_peminjaman'], width=150).grid(row=i, column=1, padx=5, pady=2, sticky="w")
+        # Tanggal Kembali
+        customtkinter.CTkLabel(inner_frame, text=pinjam['tanggal_pengembalian'], width=150).grid(row=i, column=2, padx=5, pady=2, sticky="w")
+        # Judul Buku
+        customtkinter.CTkLabel(inner_frame, text=judul_buku, width=200).grid(row=i, column=3, padx=5, pady=2, sticky="w")
+        # Nama Peminjam
+        customtkinter.CTkLabel(inner_frame, text=nama_anggota, width=200).grid(row=i, column=4, padx=5, pady=2, sticky="w")
+        # Nama Petugas
+        customtkinter.CTkLabel(inner_frame, text=nama_petugas, width=150).grid(row=i, column=5, padx=5, pady=2, sticky="w")
+
+    # Back button
+    btn_back = customtkinter.CTkButton(
+        container,
+        text="← Kembali",
+        command=show_crud_peminjaman,
+        width=120,
+        height=32,
+        corner_radius=8,
+        font=("montserrat", 14, "bold"),
+        hover_color="#1f538d"
+    )
+    btn_back.pack(pady=20)
 
 # ================================= READ PEMINJAMAN FUNCTIONS =============================
 
@@ -1493,15 +1596,12 @@ def read_anggota():
         corner_radius=10,
         fg_color=("#FFFFFF", "#333333"),
         border_color="#1f538d",
-        border_width=2,
-        orientation="horizontal"  # Enable horizontal scrolling
+        border_width=2
     )
     frame.pack(expand=True, fill="both", padx=20, pady=10)
 
     # Create inner frame for content
-    inner_frame = customtkinter.CTkFrame(frame)
-    inner_frame.pack(expand=True, fill="both")
-    inner_frame.configure(fg_color="transparent")
+    inner_frame = frame.scrollable_frame
 
     # Column headers
     headers = ["ID", "Username", "Nama", "Gender", "Telp", "Alamat", "Email"]
