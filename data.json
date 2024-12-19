@@ -170,6 +170,7 @@
             "id_peminjaman": 4,
             "tanggal_peminjaman": "2024-12-16",
             "tanggal_pengembalian": "2024-12-23",
+            "id_buku": 1,
             "id_anggota": 1,
             "id_petugas": 1
         }

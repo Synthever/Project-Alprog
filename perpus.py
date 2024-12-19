@@ -468,12 +468,15 @@ def read_buku():
         corner_radius=10,
         fg_color=("#FFFFFF", "#333333"),
         border_color="#1f538d",
-        border_width=2
+        border_width=2,
+        orientation="horizontal"  # Enable horizontal scrolling
     )
     frame.pack(expand=True, fill="both", padx=20, pady=10)
 
     # Create inner frame for content
-    inner_frame = frame.scrollable_frame
+    inner_frame = customtkinter.CTkFrame(frame)
+    inner_frame.pack(expand=True, fill="both")
+    inner_frame.configure(fg_color="transparent")
 
     # Column headers
     headers = ["ID", "Judul", "Pengarang", "Penerbit", "Tahun", "Stok", "Rak"]
@@ -974,35 +977,17 @@ def del_buku(id_buku):
 class ScrollableLabelButtonFrame(customtkinter.CTkScrollableFrame):
     def __init__(self, master, command=None, **kwargs):
         super().__init__(master, **kwargs)
+        self.grid_columnconfigure(0, weight=1)
 
-        # Create canvas for horizontal scrolling
-        self.canvas = customtkinter.CTkCanvas(self, bg='#2b2b2b', highlightthickness=0)
-        self.canvas.pack(side="left", fill="both", expand=True)
-        
-        # Add horizontal scrollbar
-        self.h_scrollbar = customtkinter.CTkScrollbar(self, orientation="horizontal", command=self.canvas.xview)
-        self.h_scrollbar.pack(side="bottom", fill="x")
-        
-        # Create frame inside canvas
-        self.scrollable_frame = customtkinter.CTkFrame(self.canvas)
-        self.scrollable_frame.pack(expand=True, fill="both")
-        self.scrollable_frame.configure(fg_color="transparent")
-        
-        # Configure canvas
-        self.canvas.configure(xscrollcommand=self.h_scrollbar.set)
-        self.canvas_window = self.canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
-        
-        # Bind events
-        self.scrollable_frame.bind("<Configure>", self.on_frame_configure)
-        self.canvas.bind("<Configure>", self.on_canvas_configure)
-        
-    def on_frame_configure(self, event=None):
-        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
-        
-    def on_canvas_configure(self, event):
-        # Update the width of the canvas window when canvas is resized
-        self.canvas.itemconfig(self.canvas_window, width=event.width)
+        self.command = command
+        self.radiobutton_variable = customtkinter.StringVar()
+        self.label_list = []
 
+    def add_item(self, item, image=None):
+        label = customtkinter.CTkLabel(self, text=item, image=image, compound="center", padx=5, anchor="w")
+        label.grid(row=len(self.label_list), column=0, pady=(0, 10), sticky="w")
+        self.label_list.append(label)
+    
 # ================================= DELETE BUKU FUNCTIONS =================================
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! BUKU FUNCTIONS AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -1075,6 +1060,7 @@ def show_crud_peminjaman():
     btn_update_peminjaman = customtkinter.CTkButton(
         menu_frame,
         text="Ubah Data Peminjaman",
+        command=update_peminjaman,
         font=("Montserrat", 18),
         width=300,
         height=60,
@@ -1142,12 +1128,15 @@ def read_peminjaman():
         corner_radius=10,
         fg_color=("#FFFFFF", "#333333"),
         border_color="#1f538d",
-        border_width=2
+        border_width=2,
+        orientation="horizontal"
     )
     frame.pack(expand=True, fill="both", padx=20, pady=10)
 
     # Create inner frame for content
-    inner_frame = frame.scrollable_frame
+    inner_frame = customtkinter.CTkFrame(frame)
+    inner_frame.pack(expand=True, fill="both")
+    inner_frame.configure(fg_color="transparent")
 
     # Column headers
     headers = ["ID", "Tanggal Pinjam", "Tanggal Kembali", "Judul Buku", "Nama Peminjam", "Nama Petugas"]
@@ -1457,6 +1446,293 @@ def create_peminjaman():
 
 # ================================= CREATE PEMINJAMAN FUNCTIONS ===========================
 
+# ================================= UPDATE PEMINJAMAN FUNCTIONS ===========================
+
+def update_peminjaman():
+    for widget in app.winfo_children():
+        widget.pack_forget()
+
+    # Create main container
+    container = customtkinter.CTkFrame(app)
+    container.pack(fill="both", expand=True, padx=40, pady=40)
+    
+    # Header
+    welcome_label = customtkinter.CTkLabel(
+        container, 
+        text="Ubah Data Peminjaman",  
+        font=("Montserrat", 32, "bold"),
+        text_color="#1f538d"
+    )
+    welcome_label.pack(pady=(20, 30))
+    
+    # Form container
+    form_frame = customtkinter.CTkFrame(container)
+    form_frame.pack(fill="x", padx=20)
+    form_frame.grid_columnconfigure((0,1), weight=1)
+    
+    # ID Input
+    label_id = customtkinter.CTkLabel(
+        form_frame,
+        text="Masukkan ID Peminjaman yang akan diubah:",
+        font=("Montserrat", 16)
+    )
+    label_id.grid(row=0, column=0, padx=10, pady=(0,10), sticky="w")
+    
+    entry_id = customtkinter.CTkEntry(
+        form_frame,
+        placeholder_text="ID Peminjaman",
+        width=300,
+        height=40,
+        font=("Montserrat", 14)
+    )
+    entry_id.grid(row=1, column=0, padx=10, pady=(0,20))
+    
+    btn_submit = customtkinter.CTkButton(
+        form_frame,
+        text="Submit",
+        command=lambda: form_update_peminjaman(entry_id.get()),
+        width=200,
+        height=40,
+        corner_radius=8,
+        font=("Montserrat", 14, "bold"),
+        hover_color="#FFA726",
+        fg_color="#FF9500"
+    )
+    btn_submit.grid(row=1, column=1, padx=10, pady=(0,20), sticky="ew")
+    
+    # Back button
+    btn_back = customtkinter.CTkButton(
+        container,
+        text="← Kembali ke Menu Utama",
+        command=show_crud_peminjaman,
+        font=("Montserrat", 14),
+        width=200,
+        height=40,
+        corner_radius=10,
+        hover_color="#1f538d",
+        fg_color="#333333"
+    )
+    btn_back.pack(pady=30)
+
+def form_update_peminjaman(id_peminjaman):
+    try:
+        id_peminjaman = int(id_peminjaman)
+        with open("data.json", "r") as file:
+            data = json.load(file)
+            list_peminjaman = data["list_peminjaman"]
+            list_buku = data["list_buku"]
+            list_anggota = data["list_anggota"]
+            auth = data["auth"]
+            
+        if id_peminjaman < 1 or id_peminjaman > len(list_peminjaman):
+            messagebox.showerror("Error", "ID Peminjaman tidak ditemukan!")
+            return
+            
+        peminjaman = list_peminjaman[id_peminjaman-1]
+        
+        for widget in app.winfo_children():
+            widget.pack_forget()
+            
+        # Create main container
+        container = customtkinter.CTkFrame(app)
+        container.pack(fill="both", expand=True, padx=40, pady=40)
+        
+        # Header
+        header_label = customtkinter.CTkLabel(
+            container,
+            text=f"Update Peminjaman ID: {id_peminjaman}",
+            font=("Montserrat", 32, "bold"),
+            text_color="#1f538d"
+        )
+        header_label.pack(pady=(20, 30))
+
+        # Form container
+        form_frame = customtkinter.CTkFrame(container)
+        form_frame.pack(fill="x", padx=20)
+        form_frame.grid_columnconfigure((0,1), weight=1)
+
+        # Tanggal Peminjaman
+        label_tgl = customtkinter.CTkLabel(form_frame, text="Tanggal Peminjaman:", font=("Montserrat", 14))
+        label_tgl.grid(row=0, column=0, padx=10, pady=(5,0), sticky="w")
+        
+        # Create date picker frame
+        date_frame = customtkinter.CTkFrame(form_frame)
+        date_frame.grid(row=1, column=0, padx=10, pady=(0,15), sticky="w")
+        
+        # Get current date from peminjaman
+        import datetime
+        current_date = datetime.datetime.strptime(peminjaman['tanggal_peminjaman'], "%Y-%m-%d")
+        
+        # Day dropdown
+        day_var = customtkinter.StringVar(value=current_date.strftime("%d"))
+        days = [str(i).zfill(2) for i in range(1, 32)]
+        day_dropdown = customtkinter.CTkOptionMenu(date_frame, variable=day_var, values=days, width=60)
+        day_dropdown.pack(side="left", padx=5)
+        
+        # Month dropdown
+        month_var = customtkinter.StringVar(value=current_date.strftime("%m"))
+        months = [str(i).zfill(2) for i in range(1, 13)]
+        month_dropdown = customtkinter.CTkOptionMenu(date_frame, variable=month_var, values=months, width=60)
+        month_dropdown.pack(side="left", padx=5)
+        
+        # Year dropdown
+        current_year = datetime.datetime.now().year
+        year_var = customtkinter.StringVar(value=current_date.strftime("%Y"))
+        years = [str(i) for i in range(current_year, current_year + 5)]
+        year_dropdown = customtkinter.CTkOptionMenu(date_frame, variable=year_var, values=years, width=80)
+        year_dropdown.pack(side="left", padx=5)
+
+        # Buku Search Frame
+        buku_frame = customtkinter.CTkFrame(form_frame)
+        buku_frame.grid(row=2, column=0, columnspan=2, padx=10, pady=(20,15), sticky="ew")
+        
+        label_buku = customtkinter.CTkLabel(buku_frame, text="Pilih Buku:", font=("Montserrat", 14))
+        label_buku.pack(pady=(10,5))
+        
+        search_buku_var = customtkinter.StringVar()
+        search_buku_entry = customtkinter.CTkEntry(
+            buku_frame, 
+            placeholder_text="Cari judul buku",
+            width=300,
+            textvariable=search_buku_var
+        )
+        search_buku_entry.pack(pady=5)
+        
+        buku_list_frame = customtkinter.CTkScrollableFrame(buku_frame, height=150)
+        buku_list_frame.pack(fill="x", padx=10, pady=10)
+        
+        selected_buku_var = customtkinter.StringVar(value=str(peminjaman['id_buku']))
+        
+        def search_buku(*args):
+            for widget in buku_list_frame.winfo_children():
+                widget.destroy()
+                
+            search_term = search_buku_var.get().lower()
+            for buku in data['list_buku']:
+                if search_term in buku['judul'].lower():
+                    btn = customtkinter.CTkRadioButton(
+                        buku_list_frame,
+                        text=f"{buku['judul']} (ID: {buku['id_buku']})",
+                        variable=selected_buku_var,
+                        value=str(buku['id_buku'])
+                    )
+                    btn.pack(pady=2, anchor="w")
+        
+        search_buku_var.trace('w', search_buku)
+        search_buku()  # Initial population
+        
+        # Anggota Search Frame
+        anggota_frame = customtkinter.CTkFrame(form_frame)
+        anggota_frame.grid(row=3, column=0, columnspan=2, padx=10, pady=(20,15), sticky="ew")
+        
+        label_anggota = customtkinter.CTkLabel(anggota_frame, text="Pilih Anggota:", font=("Montserrat", 14))
+        label_anggota.pack(pady=(10,5))
+        
+        search_anggota_var = customtkinter.StringVar()
+        search_anggota_entry = customtkinter.CTkEntry(
+            anggota_frame, 
+            placeholder_text="Cari nama anggota",
+            width=300,
+            textvariable=search_anggota_var
+        )
+        search_anggota_entry.pack(pady=5)
+        
+        anggota_list_frame = customtkinter.CTkScrollableFrame(anggota_frame, height=150)
+        anggota_list_frame.pack(fill="x", padx=10, pady=10)
+        
+        selected_anggota_var = customtkinter.StringVar(value=str(peminjaman['id_anggota']))
+        
+        def search_anggota(*args):
+            for widget in anggota_list_frame.winfo_children():
+                widget.destroy()
+                
+            search_term = search_anggota_var.get().lower()
+            for anggota in data['list_anggota']:
+                if search_term in anggota['nama'].lower():
+                    btn = customtkinter.CTkRadioButton(
+                        anggota_list_frame,
+                        text=f"{anggota['nama']} (ID: {anggota['id_anggota']})",
+                        variable=selected_anggota_var,
+                        value=str(anggota['id_anggota'])
+                    )
+                    btn.pack(pady=2, anchor="w")
+        
+        search_anggota_var.trace('w', search_anggota)
+        search_anggota()  # Initial population
+
+        # Button container
+        button_frame = customtkinter.CTkFrame(container)
+        button_frame.pack(fill="x", pady=20)
+        button_frame.configure(fg_color="transparent")
+
+        def save_changes():
+            try:
+                # Get selected date
+                selected_date = f"{year_var.get()}-{month_var.get()}-{day_var.get()}"
+                tgl_pinjam = datetime.datetime.strptime(selected_date, "%Y-%m-%d")
+                
+                # Calculate return date (7 days from borrow date)
+                tgl_kembali = tgl_pinjam + datetime.timedelta(days=7)
+                
+                # Validate selections
+                if not selected_buku_var.get() or not selected_anggota_var.get():
+                    messagebox.showerror("Error", "Pilih buku dan anggota terlebih dahulu!")
+                    return
+                
+                # Format dates for JSON
+                tgl_pinjam_str = tgl_pinjam.strftime("%Y-%m-%d")
+                tgl_kembali_str = tgl_kembali.strftime("%Y-%m-%d")
+
+                if messagebox.askyesno("Konfirmasi", "Apakah anda yakin ingin mengubah data peminjaman ini?"):
+                    # Update peminjaman data
+                    list_peminjaman[id_peminjaman-1].update({
+                        "tanggal_peminjaman": tgl_pinjam_str,
+                        "tanggal_pengembalian": tgl_kembali_str,
+                        "id_buku": int(selected_buku_var.get()),
+                        "id_anggota": int(selected_anggota_var.get())
+                    })
+                    
+                    # Save to file
+                    with open("data.json", "w") as file:
+                        json.dump(data, file, indent=4)
+                    
+                    messagebox.showinfo("Sukses", "Data peminjaman berhasil diperbarui!")
+                    show_crud_peminjaman()
+                    
+            except Exception as e:
+                messagebox.showerror("Error", f"Terjadi kesalahan: {str(e)}")
+
+        btn_save = customtkinter.CTkButton(
+            button_frame,
+            text="Simpan Perubahan",
+            command=save_changes,
+            width=200,
+            height=40,
+            corner_radius=8,
+            font=("Montserrat", 14, "bold"),
+            fg_color="#FF9500",
+            hover_color="#FFA726"
+        )
+        btn_save.pack(side="right", padx=20)
+
+        btn_back = customtkinter.CTkButton(
+            button_frame,
+            text="← Kembali",
+            command=update_peminjaman,
+            width=200,
+            height=40,
+            corner_radius=8,
+            font=("Montserrat", 14, "bold"),
+            fg_color="#666666",
+            hover_color="#333333"
+        )
+        btn_back.pack(side="left", padx=20)
+        
+    except ValueError:
+        messagebox.showerror("Error", "ID Peminjaman harus berupa angka!")
+
+# ================================= UPDATE PEMINJAMAN FUNCTIONS ===========================
+
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! PEMINJAMAN FUNCTIONS AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ANGGOTA FUNCTIONS AREA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -1596,12 +1872,15 @@ def read_anggota():
         corner_radius=10,
         fg_color=("#FFFFFF", "#333333"),
         border_color="#1f538d",
-        border_width=2
+        border_width=2,
+        orientation="horizontal"  # Enable horizontal scrolling
     )
     frame.pack(expand=True, fill="both", padx=20, pady=10)
 
     # Create inner frame for content
-    inner_frame = frame.scrollable_frame
+    inner_frame = customtkinter.CTkFrame(frame)
+    inner_frame.pack(expand=True, fill="both")
+    inner_frame.configure(fg_color="transparent")
 
     # Column headers
     headers = ["ID", "Username", "Nama", "Gender", "Telp", "Alamat", "Email"]

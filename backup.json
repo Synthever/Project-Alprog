@@ -7,11 +7,11 @@
     "list_buku": [
         {
             "id_buku": 1,
-            "judul": "Harry Potter",
+            "judul": "Harry Potterz",
             "pengarang": "J.K. Rowling",
             "penerbit": "Gramedia",
-            "tahun_terbit": "2000",
-            "stock": "10",
+            "tahun_terbit": 2000,
+            "stock": 10,
             "rak": "A1"
         },
         {
@@ -130,11 +130,49 @@
             "tahun_terbit": "2013",
             "stock": "3",
             "rak": "A14"
+        },
+        {
+            "id_buku": 15,
+            "judul": "dadadad",
+            "pengarang": "dadad",
+            "penerbit": "dawdada",
+            "tahun_terbit": 1131,
+            "stock": 313,
+            "rak": "3131"
         }
     ],
     "list_peminjaman": [
         {
-            "id": 1
+            "id_peminjaman": 1,
+            "tanggal_peminjaman": "2024-12-15",
+            "tanggal_pengembalian": "2024-12-22",
+            "id_buku": 7,
+            "id_anggota": 2,
+            "id_petugas": 1
+        },
+        {
+            "id_peminjaman": 2,
+            "tanggal_peminjaman": "2024-12-15",
+            "tanggal_pengembalian": "2024-12-22",
+            "id_buku": 2,
+            "id_anggota": 2,
+            "id_petugas": 1
+        },
+        {
+            "id_peminjaman": 3,
+            "tanggal_peminjaman": "2024-12-15",
+            "tanggal_pengembalian": "2024-12-22",
+            "id_buku": 6,
+            "id_anggota": 2,
+            "id_petugas": 1
+        },
+        {
+            "id_peminjaman": 4,
+            "tanggal_peminjaman": "2024-12-16",
+            "tanggal_pengembalian": "2024-12-23",
+            "id_buku": 1,
+            "id_anggota": 1,
+            "id_petugas": 1
         }
     ],
     "list_pengembalian": [
@@ -144,13 +182,22 @@
     ],
     "list_anggota": [
         {
-        "id_anggota": 1,
-        "username": "daniaw",
-        "nama": "Dania Brigita Chandra Kirana",
-        "gender": "Perempuan",
-        "telp": "081234567890",
-        "alamat": "Kalasan",
-        "email": "daniabrigita25@students.amikom.ac.id"
+            "id_anggota": 1,
+            "username": "daniaw",
+            "nama": "Dania Brigita Chandra Kirana",
+            "gender": "Perempuan",
+            "telp": "081234567890",
+            "alamat": "Kalasan",
+            "email": "daniabrigita25@students.amikom.ac.id"
+        },
+        {
+            "id_anggota": 2,
+            "username": "daniaw",
+            "nama": "Dania Brigita C K",
+            "gender": "Perempuan",
+            "telp": "085155555785",
+            "alamat": "Kalasa, Yogyakarta",
+            "email": "daniaw@amikom.ac.id"
         }
     ]
 }
